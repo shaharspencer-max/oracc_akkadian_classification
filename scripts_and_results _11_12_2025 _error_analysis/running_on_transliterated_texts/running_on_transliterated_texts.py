@@ -1,0 +1,324 @@
+import os
+import re
+import random
+import threading
+import time
+import pandas as pd
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from google.genai import types
+from google import genai
+
+# --- Configuration ---
+cities = """
+Babylon, Uruk, Ur, Persepolis, Daskyleion, Naqsh-I Rustam, Assur, Burmarina, Nimrud, Dur-Katlimmu, Guzana, Huzirina, Balāwāt, Marqasu, Zincirli, Tell Billa, Til Barsip, Tušhan, Sippar, Kutha, Borsippa, Nippur, Nineveh, Kish, Dilbat, Larsa, Dur-Sharrukin, Kilizu, Tell Barri, Tarbisu, Tell Satu Qala, Kurkh, Tell Abu Marya, Tell Ajaja, Tell Fakhariyah, Tell al-Hawa, Tigris Tunnel, Tell Rimah, Kizkapanlı, Byblos, Pāra, Tell Abta, Sabaʾa, Antakya, Dohuk, Kenk Boǧazı, Luristan, Dur-Kurigalzu, Me-Turran, Zalu-Ab, Selaʾ, Harran/Carrhae, Susa, Brissa, Tayma, Padakku, Marad, Nahr el-Kelb, Kissik, Isin, Arslan Tash, Tell Tayinat, Mila Mergi, Tell Baradan, Qalʾeh-i Imam, Tang-i Var, Ashdod, Melid, Turlu Höyük, Carchemish, Tunip, Samaria, Larnaka, Najafabad, Jerwan, Samarra, Tikrit, Judi Dagh, Wadi Bastura Tunnel, Bavian, Negub Tunnel, el-Ghab, Kalmākarra, Ben Shemen, Der, Arbela, Naṣibina, Hamath, Damascus, Raṣappa, Habruri, Hindanu, Barhalza, Bit-Zamani, Allabria, Qunbuna, Arzuhina, Muṣaṣir, Mannea, Kar-Sharrukin, Eshnunna, Parsua, Kisheshim, Lahiru, Arrapha, Larak, Akkad, Simyra, Manṣuate, Arpadda, Elam, Urartu, Sur Jureh, Ana, Dawali, Judeideh, Zawiyeh"""
+#
+
+API_KEYS = [
+    "AIzaSyCbXUA36cXaLFRyWI6lcOLInzCqWahZwHs"
+    "AIzaSyCkU8senwdp7odrf6kn1SbbhL32Jp1XpBQ",
+    "AIzaSyCbXUA36cXaLFRyWI6lcOLInzCqWahZwHs",
+    "AIzaSyBKeJV44YBkshwqoCsNo9YjQ2EbIXOFkuo",
+    "AIzaSyA3umd5F6nyvCT21jA2MDqr69Zn98BvQkk",
+    "AIzaSyAQEtf4trA0CcU1vnrry3OOvRcmhsrvnHI",
+    "AIzaSyAu5a0Vs1agvPwI_k7oYWClHNLyql3j_GE",
+"AIzaSyC2eokQCXyVWkyHCpQ4d1fjic91BvDkh6o",
+          "AIzaSyBLrLtt5Fr2utl2c8rd8gITu6W0444K56g"
+]
+
+
+# This lock ensures only one thread writes to the CSV at a time
+csv_write_lock = threading.Lock()
+
+# Track which keys are still usable (shared state across threads)
+available_keys_lock = threading.Lock()
+available_keys = set(API_KEYS)  # Initially all keys are available
+
+
+system_text = (f"""
+        You are an expert in Akkadian regional dialects and scribal practices, with special focus on city-to-city variation in vocabulary, orthography, formulae, and scribal conventions.
+        Your task is to identify which ancient location this text was likely written in, from the list CANDIDATE_LOCATIONS below.
+
+        Constraint: Your answer must be one of the locations in CANDIDATE_LOCATIONS.
+
+        Input Format:
+        TEXT - the Akkadian text to analyze. The text was written in the first millennium BCE. Some types of proper names are masked (GN - geographical name,SN- state name,TN - Temple Name, WN - Water Name, QN - Quarter Name, ON  - Geographical Name (variant) DN - Divine Name,RN - Royal Name, EN - ethnic name. )
+
+        Instructions:
+        1. Initial Scan: Carefully read the text. Understand what is written. 
+        2. Analyze indicative features: Deeply and carefully understand and analyze the text, the content, the subject matters, the grammar, onomastics, etc. 
+        3. note any features that plausibly indicate a geographic origin (e.g. content,  morphology, lexicon, spelling conventions, dialectal forms, names, grammatical peculiarities, formulaic expressions, orthographic practices, references to local institutions or deities, etc.).
+        4. Evaluate Candidates: Compare the observed features against the specific locations in the CANDIDATE_LOCATIONS list.
+        5. Output Reasoning: Before providing the final answer, you must write a short explanation of your choice.
+        6. Final Output: Provide your choice of location in XML format like this: <CITY_NAME_CLASSIFICATION>city_name</CITY_NAME_CLASSIFICATION.      
+
+        ====CANDIDATE_LOCATIONS=== 
+        {cities}
+          """)
+
+class CallGemini:
+    @staticmethod
+    def classify_city(user_text: str, api_key: str):
+        system_text = (f"""
+        You are an expert in Akkadian regional dialects and scribal practices, with special focus on city-to-city variation in vocabulary, orthography, formulae, and scribal conventions.
+        Your task is to identify which ancient location this text was likely written in, from the list CANDIDATE_LOCATIONS below.
+
+        Constraint: Your answer must be one of the locations in CANDIDATE_LOCATIONS.
+
+        Input Format:
+        TEXT - the Akkadian text to analyze. The text was written in the first millennium BCE. Some types of proper names are masked (GN - geographical name,SN- state name,TN - Temple Name, WN - Water Name, QN - Quarter Name, ON  - Geographical Name (variant) DN - Divine Name,RN - Royal Name, EN - ethnic name. )
+
+        Instructions:
+        1. Initial Scan: Carefully read the text. Understand what is written. 
+        2. Analyze indicative features: Deeply and carefully understand and analyze the text, the content, the subject matters, the grammar, onomastics, etc. 
+        3. note any features that plausibly indicate a geographic origin (e.g. content,  morphology, lexicon, spelling conventions, dialectal forms, names, grammatical peculiarities, formulaic expressions, orthographic practices, references to local institutions or deities, etc.).
+        4. Evaluate Candidates: Compare the observed features against the specific locations in the CANDIDATE_LOCATIONS list.
+        5. Output Reasoning: Before providing the final answer, you must write a short explanation of your choice.
+        6. Final Output: Provide your choice of location in XML format like this: <CITY_NAME_CLASSIFICATION>city_name</CITY_NAME_CLASSIFICATION.      
+
+        ====CANDIDATE_LOCATIONS=== 
+        {cities}
+          """
+                       )
+
+        # Instantiate client with the specific key passed to this thread
+        client = genai.Client(api_key=api_key)
+
+        try:
+            resp = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=user_text,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_text,
+                    temperature=0.1
+                ),
+            )
+            return resp.text if hasattr(resp, "text") else str(resp), None  # Success
+        except Exception as e:
+            error_msg = str(e)
+            # Check if it's a rate limit error
+            is_rate_limit = "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg or "quota" in error_msg.lower()
+            print(f"API_ERROR ({api_key[:10]}...): {error_msg}")
+            return f"API_ERROR: {error_msg}", is_rate_limit
+
+
+def load_train_and_test(source_data_path: str = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    dataframe = pd.read_csv(source_data_path, encoding="utf-8")
+    random_seed = 42
+    train_df = dataframe.sample(frac=0.7, random_state=random_seed)
+    test_df = dataframe.drop(train_df.index).reset_index(drop=True)
+    return train_df, test_df
+
+from ..
+def load_predictions_file(output_path: str = None) -> tuple[pd.DataFrame, set]:
+    processed_ids = set()
+    if os.path.exists(output_path):
+        existing_results = pd.read_csv(output_path, encoding="utf-8")
+        existing_results = classify_text_quality()
+        # Use project + textid combination as unique identifier
+        processed_ids = set(zip(existing_results["project"].astype(str), existing_results["textid"].astype(str)))
+        print(f"🔁 Resuming from previous run — {len(processed_ids)} texts already processed.")
+    else:
+        # Create empty file with headers
+        existing_results = pd.DataFrame(columns=[
+            "project", "textid", "city_true", "writing_start_year", "writing_end_year", "gemini_response",
+            "translation",
+            "normalized text", "lemmatized_text", "transliterated_text", "user_message_gemini_2.5_fast",
+            "predicted_city_gemini_2.5",
+            "input_text_source", "genre"
+        ])
+        existing_results.to_csv(output_path, index=False, encoding="utf-8")
+        print("🆕 Starting new prediction run.")
+    return None, processed_ids
+
+
+def choose_best_available_text_field(row: pd.Series) -> str:
+    # Handle NaN gracefully
+    normalized_text = str(row.get("normalized text", ""))
+
+    if normalized_text and not re.fullmatch(r'[\sUNK]+', normalized_text) and normalized_text.lower() != 'nan':
+        return "normalized text"
+    return "transliterated_text"
+
+
+def parse_and_normalize_city_predicted_name(full_prediction_string: str) -> str:
+    if "API_ERROR" in full_prediction_string:
+        return "API_ERROR"
+    match = re.search(r"<CITY_NAME_CLASSIFICATION>(.*?)</CITY_NAME_CLASSIFICATION>", full_prediction_string)
+    match = match.group(1).strip() if match else "COULD_NOT_PARSE"
+    return match
+
+
+# --- WORKER FUNCTION ---
+def process_single_row(row, assigned_key, output_path):
+    """
+    This function runs inside a thread.
+    """
+    global available_keys
+    
+    textid = str(row["textid"])
+    project = str(row["project"])
+    city_true = row.get("city")
+    start_year = row.get("writing_start_year")
+    end_year = row.get("writing_end_year")
+
+    best_available = choose_best_available_text_field(row=row)
+    if best_available == "transliterated_text":
+        print(f"⏭️ Skipping ID {textid} (Transliterated only)")
+        return
+    if city_true == "UNMAPPED":
+        print(f"⏭️ Skipping ID {textid} (unmapped)")
+        return
+    # text = row.get(best_available)
+    text = row.get("transliterated_text")
+
+    try:
+        user_message = f"<TEXT> {text} </TEXT>"
+
+        # --- RETRY LOGIC WITH AVAILABLE KEYS ---
+        final_response = None
+        parsed_city = "API_ERROR"
+
+        # Get snapshot of available keys
+        with available_keys_lock:
+            if not available_keys:
+                print(f"❌ NO KEYS AVAILABLE for ID {textid}. Stopping processing.")
+                return
+            
+            # Prioritize assigned key if still available, otherwise get random available key
+            if assigned_key in available_keys:
+                keys_to_try = [assigned_key] + list(available_keys - {assigned_key})
+            else:
+                keys_to_try = list(available_keys)
+            random.shuffle(keys_to_try[1:])  # Shuffle backups
+
+        for key in keys_to_try:
+            # Check if key is still available (might have been removed by another thread)
+            with available_keys_lock:
+                if key not in available_keys:
+                    continue
+            
+            gemini_response, is_rate_limit = CallGemini.classify_city(user_text=user_message, api_key=key)
+            parsed_city = parse_and_normalize_city_predicted_name(full_prediction_string=gemini_response)
+
+            if parsed_city != "API_ERROR":
+                final_response = gemini_response
+                break  # Success! Exit the key loop
+            elif is_rate_limit:
+                # Remove this key from available keys
+                with available_keys_lock:
+                    if key in available_keys:
+                        available_keys.discard(key)
+                        print(f"🚫 Key {key[:10]}... hit rate limit. Removed from pool. Remaining: {len(available_keys)}")
+                        if not available_keys:
+                            print("❌ ALL KEYS EXHAUSTED! Stopping all processing.")
+                            return
+            else:
+                print(f"⚠️ Key {key[:10]}... failed for ID {textid} (non-rate-limit error). Trying next key...")
+
+        # --- CHECK IF ALL FAILED ---
+        if parsed_city == "API_ERROR":
+            print(f"❌ All available keys failed for ID {textid}. Skipping save so it can be retried next run.")
+            return  # Exit function, do not write to file
+
+        print(f"THREAD-DONE: ID {textid} | True: {city_true} | Pred: {parsed_city}")
+
+        # Prepare DataFrame row
+        new_row = pd.DataFrame([{
+            "project": project,
+            "textid": textid,
+            "city_true": city_true,
+            "writing_start_year": start_year,
+            "writing_end_year": end_year,
+            "gemini_response": final_response,
+            "translation": row.get("translation"),
+            "normalized text": row.get("normalized text"),
+            "lemmatized_text": row.get("lemmatized_text"),
+            "transliterated_text": row.get("transliterated_text"),
+            "user_message_gemini_2.5_fast": user_message,
+            "predicted_city_gemini_2.5": parsed_city,
+            "input_text_source": best_available,
+            "genre": row.get("genre")
+        }])
+
+        # --- CRITICAL SECTION: WRITE TO FILE ---
+        # We lock here so threads don't write over each other
+        with csv_write_lock:
+            new_row.to_csv(output_path, mode="a", header=False, index=False, encoding="utf-8")
+        time.sleep(5)
+
+    except Exception as e:
+        print(f"❌ Error processing textid={textid}: {e}")
+
+
+def run_threaded_predictions(test_df: pd.DataFrame, processed_ids: set, output_path: str):
+    global available_keys
+    
+    # Filter out already processed rows using project + textid combination
+    test_df['processed_key'] = list(zip(test_df["project"].astype(str), test_df["textid"].astype(str)))
+    test_df = test_df[~test_df["processed_key"].isin(processed_ids)].reset_index(drop=True)
+    # test_df = test_df[test_df["genre"].isin(["Literary Work", "Literary"])]
+    test_df = test_df.drop('processed_key', axis=1)  # Remove helper column
+    total_rows = len(test_df)
+    print(f"➡️ Remaining texts to process: {total_rows}")
+    print(f"🔑 Starting with {len(available_keys)} API keys")
+
+    # Set number of threads equal to number of keys to maximize throughput without hitting single-key limits too hard
+    # You can increase max_workers, but 1 key per thread is usually safest logic.
+    max_threads = len(API_KEYS)
+
+    with ThreadPoolExecutor(max_workers=max_threads) as executor:
+        futures = []
+
+        for idx, row in test_df.iterrows():
+            # Check if we still have keys before submitting more work
+            with available_keys_lock:
+                if not available_keys:
+                    print("\n❌ ALL KEYS EXHAUSTED! Stopping submission of new tasks.")
+                    break
+            
+            # Round-robin assignment of keys
+            assigned_key = API_KEYS[idx % len(API_KEYS)]
+
+            # Submit task to thread pool
+            futures.append(executor.submit(process_single_row, row, assigned_key, output_path))
+
+        # Wait for submitted tasks to complete
+        for future in as_completed(futures):
+            try:
+                future.result()  # raises exceptions if they occurred in the thread
+            except Exception as exc:
+                print(f"Thread generated an exception: {exc}")
+            
+            # Check if we should stop early
+            with available_keys_lock:
+                if not available_keys:
+                    print("\n⚠️ All keys exhausted during processing. Cancelling remaining futures...")
+                    # Cancel pending futures
+                    for f in futures:
+                        f.cancel()
+                    break
+
+    with available_keys_lock:
+        remaining_keys = len(available_keys)
+    
+    if remaining_keys == 0:
+        print(f"\n❌ PROGRAM ENDED: All API keys have been rate-limited.")
+        print(f"💡 Re-run this script later when quotas reset to process remaining texts.")
+    else:
+        print(f"\n✅ Completed all available test samples. {remaining_keys} keys still available.")
+
+
+if __name__ == '__main__':
+    # Update this path to your actual file location
+    source_data_path = r"first_millennium_oracc_tablets_gn__and_en_masked_with_mapped_city_filters.csv"
+
+    # Ensure source file exists before running
+    if os.path.exists(source_data_path):
+        train_data, test_data = load_train_and_test(source_data_path=source_data_path)
+
+        output_path = r"gemini_predictions_first_millenium_with_candidates_list_no_timeframe_no_gn_no_en_with_mapped_city_filters_on_transliterated_texts.csv"
+        _, processed_ids = load_predictions_file(output_path=output_path)
+
+        run_threaded_predictions(test_df=test_data, processed_ids=processed_ids, output_path=output_path)
+    else:
+        print(f"❌ Source file not found: {source_data_path}")

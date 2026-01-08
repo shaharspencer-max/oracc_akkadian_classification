@@ -1,0 +1,17 @@
+after a while i inderstood this was problematic because of the distribution of tokens so i started adding candidates.
+
+
+these are the proper nouns i masked
+
+#     "PN",
+        #     "RN",
+        #     "GN",
+        #     "SN",
+        #     "DN",
+        #     "TN",
+        #     "WN",
+        #     ,
+        #     "LN",
+        #     "QN",
+        #     "ON",
+        #     "RN"

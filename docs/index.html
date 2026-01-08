@@ -1,0 +1,3608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_37b61fc23fba7b812334e8e47e2b76a9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    <div style="position:fixed;bottom:50px;left:50px;background:white;padding:10px;border:1px solid grey;z-index:9999;"><b>Regions</b><br><i style="background:#e6194b;width:12px;height:12px;display:inline-block;"></i> Anatolia<br><i style="background:#3cb44b;width:12px;height:12px;display:inline-block;"></i> Arabia<br><i style="background:#ffe119;width:12px;height:12px;display:inline-block;"></i> Assyria<br><i style="background:#4363d8;width:12px;height:12px;display:inline-block;"></i> Assyria (Periphery)<br><i style="background:#f58231;width:12px;height:12px;display:inline-block;"></i> Babylonia (North)<br><i style="background:#911eb4;width:12px;height:12px;display:inline-block;"></i> Babylonia (South)<br><i style="background:#46f0f0;width:12px;height:12px;display:inline-block;"></i> Eastern Mesopotamia<br><i style="background:#f032e6;width:12px;height:12px;display:inline-block;"></i> Iran/Elam<br><i style="background:#bcf60c;width:12px;height:12px;display:inline-block;"></i> Levant<br><i style="background:#fabebe;width:12px;height:12px;display:inline-block;"></i> Middle Euphrates<br><i style="background:#008080;width:12px;height:12px;display:inline-block;"></i> Syria<br><i style="background:#e6beff;width:12px;height:12px;display:inline-block;"></i> Syria (Periphery)<br><i style="background:#9a6324;width:12px;height:12px;display:inline-block;"></i> Upper Mesopotamia<br></div>
+    
+    <div id="cityPanel" style="position:fixed;top:10px;right:10px;background:white;padding:15px;border:1px solid grey;z-index:9999;max-height:80vh;overflow-y:auto;width:280px;font-size:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <b style="font-size:14px;">Cities by Region</b>
+            <button onclick="document.getElementById('cityPanel').style.display='none'" style="border:none;background:none;cursor:pointer;font-size:16px;">×</button>
+        </div>
+    <div style="margin-bottom:10px;"><b style="color:#e6194b">Anatolia (3)</b><br>Daskyleion, Melid, Urartu</div><div style="margin-bottom:10px;"><b style="color:#3cb44b">Arabia (2)</b><br>Padakku, Tayma</div><div style="margin-bottom:10px;"><b style="color:#ffe119">Assyria (14)</b><br>Arbela, Arrapha, Assur, Balāwāt, Bavian, Dur-Sharrukin, Jerwan, Kilizu, Negub Tunnel, Nimrud, Nineveh, Tarbisu, Tell Billa, Wadi Bastura Tunnel</div><div style="margin-bottom:10px;"><b style="color:#4363d8">Assyria (Periphery) (6)</b><br>Dohuk, Judi Dagh, Lahiru, Larak, Mila Mergi, Muṣaṣir</div><div style="margin-bottom:10px;"><b style="color:#f58231">Babylonia (North) (9)</b><br>Akkad, Babylon, Borsippa, Dilbat, Dur-Kurigalzu, Kish, Kutha, Marad, Sippar</div><div style="margin-bottom:10px;"><b style="color:#911eb4">Babylonia (South) (6)</b><br>Isin, Kissik, Larsa, Nippur, Ur, Uruk</div><div style="margin-bottom:10px;"><b style="color:#46f0f0">Eastern Mesopotamia (2)</b><br>Der, Me-Turran</div><div style="margin-bottom:10px;"><b style="color:#f032e6">Iran/Elam (10)</b><br>Elam, Kalmākarra, Luristan, Najafabad, Naqsh-I Rustam, Persepolis, Qalʾeh-i Imam, Susa, Tang-i Var, Zalu-Ab</div><div style="margin-bottom:10px;"><b style="color:#bcf60c">Levant (9)</b><br>Ashdod, Ben Shemen, Brissa, Byblos, Larnaka, Nahr el-Kelb, Samaria, Selaʾ, Simyra</div><div style="margin-bottom:10px;"><b style="color:#fabebe">Middle Euphrates (7)</b><br>Ana, Dawali, Hindanu, Judeideh, Sur Jureh, Tell Satu Qala, Zawiyeh</div><div style="margin-bottom:10px;"><b style="color:#008080">Syria (15)</b><br>Antakya, Arpadda, Arslan Tash, Burmarina, Carchemish, Damascus, Hamath, Manṣuate, Marqasu, Tell Tayinat, Til Barsip, Tunip, Turlu Höyük, Zincirli, el-Ghab</div><div style="margin-bottom:10px;"><b style="color:#e6beff">Syria (Periphery) (2)</b><br>Kenk Boǧazı, Kizkapanlı</div><div style="margin-bottom:10px;"><b style="color:#9a6324">Upper Mesopotamia (21)</b><br>Dur-Katlimmu, Guzana, Harran/Carrhae, Huzirina, Kurkh, Naṣibina, Pāra, Raṣappa, Sabaʾa, Samarra, Tell Abta, Tell Abu Marya, Tell Ajaja, Tell Baradan, Tell Barri, Tell Fakhariyah, Tell Rimah, Tell al-Hawa, Tigris Tunnel, Tikrit, Tušhan</div></div>
+    <button onclick="document.getElementById('cityPanel').style.display='block'" style="position:fixed;top:10px;right:10px;z-index:9998;padding:8px 12px;background:#007bff;color:white;border:none;border-radius:4px;cursor:pointer;">Show Cities</button>
+    
+            <div class="folium-map" id="map_37b61fc23fba7b812334e8e47e2b76a9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_37b61fc23fba7b812334e8e47e2b76a9 = L.map(
+                "map_37b61fc23fba7b812334e8e47e2b76a9",
+                {
+                    center: [34.851714036608634, 41.74711522386869],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b99504de4430dd6e271cd3022cffdd18 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b99504de4430dd6e271cd3022cffdd18.addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+            var circle_marker_4bf2208f99f80191df5fc6d78f817716 = L.circleMarker(
+                [40.132494544271545, 28.050738363448986],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e6194b", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_81d597b6892ea10d86ea7e20cf926162 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_60d6b151b527dfdf3a3b74e6b86a9620 = $(`<div id="html_60d6b151b527dfdf3a3b74e6b86a9620" style="width: 100.0%; height: 100.0%;"><b>Daskyleion</b><br>Region: Anatolia<br><a href='https://pleiades.stoa.org/places/511225' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_81d597b6892ea10d86ea7e20cf926162.setContent(html_60d6b151b527dfdf3a3b74e6b86a9620);
+            
+        
+
+        circle_marker_4bf2208f99f80191df5fc6d78f817716.bindPopup(popup_81d597b6892ea10d86ea7e20cf926162)
+        ;
+
+        
+    
+    
+            circle_marker_4bf2208f99f80191df5fc6d78f817716.bindTooltip(
+                `<div>
+                     Daskyleion
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_76cf76dff1fa83d0051a8e9959412010 = L.circleMarker(
+                [38.382217, 38.361152],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e6194b", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b8152adc1cfcfed2d72aa5e4ef2ed06d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7261dfac937ca2cdea4691d771b54bb8 = $(`<div id="html_7261dfac937ca2cdea4691d771b54bb8" style="width: 100.0%; height: 100.0%;"><b>Melid</b><br>Region: Anatolia<br><a href='https://pleiades.stoa.org/places/629040' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b8152adc1cfcfed2d72aa5e4ef2ed06d.setContent(html_7261dfac937ca2cdea4691d771b54bb8);
+            
+        
+
+        circle_marker_76cf76dff1fa83d0051a8e9959412010.bindPopup(popup_b8152adc1cfcfed2d72aa5e4ef2ed06d)
+        ;
+
+        
+    
+    
+            circle_marker_76cf76dff1fa83d0051a8e9959412010.bindTooltip(
+                `<div>
+                     Melid
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e1ed37400fbeec7ace1602c78d176a70 = L.circleMarker(
+                [38.5414898472, 43.9651406338],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e6194b", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_62b424a47602584505cd148ba9807f9a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7909af7364a6d8da16329ead7d32f3c1 = $(`<div id="html_7909af7364a6d8da16329ead7d32f3c1" style="width: 100.0%; height: 100.0%;"><b>Urartu</b><br>Region: Anatolia<br><a href='https://pleiades.stoa.org/places/214160492' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_62b424a47602584505cd148ba9807f9a.setContent(html_7909af7364a6d8da16329ead7d32f3c1);
+            
+        
+
+        circle_marker_e1ed37400fbeec7ace1602c78d176a70.bindPopup(popup_62b424a47602584505cd148ba9807f9a)
+        ;
+
+        
+    
+    
+            circle_marker_e1ed37400fbeec7ace1602c78d176a70.bindTooltip(
+                `<div>
+                     Urartu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_68c685fec45761feb18eea3d20b44f09 = L.circleMarker(
+                [25.9786, 40.4668],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3cb44b", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_0257d14d8a171a49fd4bb793fa8e5a21 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_caba6d623e13d06f21fbe38e3adb594d = $(`<div id="html_caba6d623e13d06f21fbe38e3adb594d" style="width: 100.0%; height: 100.0%;"><b>Padakku</b><br>Region: Arabia<br><a href='https://pleiades.stoa.org/places/982176368' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_0257d14d8a171a49fd4bb793fa8e5a21.setContent(html_caba6d623e13d06f21fbe38e3adb594d);
+            
+        
+
+        circle_marker_68c685fec45761feb18eea3d20b44f09.bindPopup(popup_0257d14d8a171a49fd4bb793fa8e5a21)
+        ;
+
+        
+    
+    
+            circle_marker_68c685fec45761feb18eea3d20b44f09.bindTooltip(
+                `<div>
+                     Padakku
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b0742f112943bb73d53782148442bf4c = L.circleMarker(
+                [27.6219, 38.55],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#3cb44b", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_581ba93816a13006b652d06f405feb5e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_35cfa13de7a21b7b0282d7f930c12d91 = $(`<div id="html_35cfa13de7a21b7b0282d7f930c12d91" style="width: 100.0%; height: 100.0%;"><b>Tayma</b><br>Region: Arabia<br><a href='https://pleiades.stoa.org/places/814739' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_581ba93816a13006b652d06f405feb5e.setContent(html_35cfa13de7a21b7b0282d7f930c12d91);
+            
+        
+
+        circle_marker_b0742f112943bb73d53782148442bf4c.bindPopup(popup_581ba93816a13006b652d06f405feb5e)
+        ;
+
+        
+    
+    
+            circle_marker_b0742f112943bb73d53782148442bf4c.bindTooltip(
+                `<div>
+                     Tayma
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_611c6c7b89fd588b359b7618d57b0ca4 = L.circleMarker(
+                [36.19131745320756, 44.00938028561428],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_a0d58c3a75e068b27fc33a50675d9709 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1afbedef956cfc424035540856db5a18 = $(`<div id="html_1afbedef956cfc424035540856db5a18" style="width: 100.0%; height: 100.0%;"><b>Arbela</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/874341' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_a0d58c3a75e068b27fc33a50675d9709.setContent(html_1afbedef956cfc424035540856db5a18);
+            
+        
+
+        circle_marker_611c6c7b89fd588b359b7618d57b0ca4.bindPopup(popup_a0d58c3a75e068b27fc33a50675d9709)
+        ;
+
+        
+    
+    
+            circle_marker_611c6c7b89fd588b359b7618d57b0ca4.bindTooltip(
+                `<div>
+                     Arbela
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3cd163d4b58b0702f429900d774950fe = L.circleMarker(
+                [35.4694453243, 44.3956185198],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_8be753ca4c5ea869e2548d29d2b336d4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7fa2b30624754cded6ec2c344afd46a6 = $(`<div id="html_7fa2b30624754cded6ec2c344afd46a6" style="width: 100.0%; height: 100.0%;"><b>Arrapha</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/893941' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_8be753ca4c5ea869e2548d29d2b336d4.setContent(html_7fa2b30624754cded6ec2c344afd46a6);
+            
+        
+
+        circle_marker_3cd163d4b58b0702f429900d774950fe.bindPopup(popup_8be753ca4c5ea869e2548d29d2b336d4)
+        ;
+
+        
+    
+    
+            circle_marker_3cd163d4b58b0702f429900d774950fe.bindTooltip(
+                `<div>
+                     Arrapha
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_53af592868f07bd40bade16af52f6808 = L.circleMarker(
+                [35.45557316179846, 43.2613012875624],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_d7967a965a111922e5123441ab1d5f76 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_944c09c1a563d263a948dd93fca5499f = $(`<div id="html_944c09c1a563d263a948dd93fca5499f" style="width: 100.0%; height: 100.0%;"><b>Assur</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/893945' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_d7967a965a111922e5123441ab1d5f76.setContent(html_944c09c1a563d263a948dd93fca5499f);
+            
+        
+
+        circle_marker_53af592868f07bd40bade16af52f6808.bindPopup(popup_d7967a965a111922e5123441ab1d5f76)
+        ;
+
+        
+    
+    
+            circle_marker_53af592868f07bd40bade16af52f6808.bindTooltip(
+                `<div>
+                     Assur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_add365bde6763bedefabbbdc80169341 = L.circleMarker(
+                [36.2294, 43.4033],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_420721ef80576bfc444c996c810c554e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5aaf8850cb3f49f5edb0ee4dc10b1411 = $(`<div id="html_5aaf8850cb3f49f5edb0ee4dc10b1411" style="width: 100.0%; height: 100.0%;"><b>Balāwāt</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/924247288' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_420721ef80576bfc444c996c810c554e.setContent(html_5aaf8850cb3f49f5edb0ee4dc10b1411);
+            
+        
+
+        circle_marker_add365bde6763bedefabbbdc80169341.bindPopup(popup_420721ef80576bfc444c996c810c554e)
+        ;
+
+        
+    
+    
+            circle_marker_add365bde6763bedefabbbdc80169341.bindTooltip(
+                `<div>
+                     Balāwāt
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2a6b7e3d3a7bf453e69210129b7d4af3 = L.circleMarker(
+                [36.76058565, 43.419754100000006],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_035d5bb97806863d123deef05c6bc01e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_55831922123e1461d9a436aed31a6915 = $(`<div id="html_55831922123e1461d9a436aed31a6915" style="width: 100.0%; height: 100.0%;"><b>Bavian</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/874398' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_035d5bb97806863d123deef05c6bc01e.setContent(html_55831922123e1461d9a436aed31a6915);
+            
+        
+
+        circle_marker_2a6b7e3d3a7bf453e69210129b7d4af3.bindPopup(popup_035d5bb97806863d123deef05c6bc01e)
+        ;
+
+        
+    
+    
+            circle_marker_2a6b7e3d3a7bf453e69210129b7d4af3.bindTooltip(
+                `<div>
+                     Bavian
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_871c5507fe7492b8fd97dfbbc2e3f799 = L.circleMarker(
+                [36.50661765, 43.23141415],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_930b393098ed074f08ff753c3ee7d9af = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ed8edcb4a44f95b546f3087fb01ec178 = $(`<div id="html_ed8edcb4a44f95b546f3087fb01ec178" style="width: 100.0%; height: 100.0%;"><b>Dur-Sharrukin</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/874458' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_930b393098ed074f08ff753c3ee7d9af.setContent(html_ed8edcb4a44f95b546f3087fb01ec178);
+            
+        
+
+        circle_marker_871c5507fe7492b8fd97dfbbc2e3f799.bindPopup(popup_930b393098ed074f08ff753c3ee7d9af)
+        ;
+
+        
+    
+    
+            circle_marker_871c5507fe7492b8fd97dfbbc2e3f799.bindTooltip(
+                `<div>
+                     Dur-Sharrukin
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0da430fe0a9a4cd53e7779d1b19ad437 = L.circleMarker(
+                [36.66952111821483, 43.39459501946802],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_0c1d92b80703d1db31ab142a3d23acb6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_87a9949e77e0c38b85bc1c1260074c4f = $(`<div id="html_87a9949e77e0c38b85bc1c1260074c4f" style="width: 100.0%; height: 100.0%;"><b>Jerwan</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/10280471' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_0c1d92b80703d1db31ab142a3d23acb6.setContent(html_87a9949e77e0c38b85bc1c1260074c4f);
+            
+        
+
+        circle_marker_0da430fe0a9a4cd53e7779d1b19ad437.bindPopup(popup_0c1d92b80703d1db31ab142a3d23acb6)
+        ;
+
+        
+    
+    
+            circle_marker_0da430fe0a9a4cd53e7779d1b19ad437.bindTooltip(
+                `<div>
+                     Jerwan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0884ce5e17a153c5f6ac28707af0da30 = L.circleMarker(
+                [36.104798292713, 43.75178937310088],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_7d84dd3976cb7c9d2769455931e25068 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9cd7d02fab9a5e72ed5680602562a36f = $(`<div id="html_9cd7d02fab9a5e72ed5680602562a36f" style="width: 100.0%; height: 100.0%;"><b>Kilizu</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/894027' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_7d84dd3976cb7c9d2769455931e25068.setContent(html_9cd7d02fab9a5e72ed5680602562a36f);
+            
+        
+
+        circle_marker_0884ce5e17a153c5f6ac28707af0da30.bindPopup(popup_7d84dd3976cb7c9d2769455931e25068)
+        ;
+
+        
+    
+    
+            circle_marker_0884ce5e17a153c5f6ac28707af0da30.bindTooltip(
+                `<div>
+                     Kilizu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5a73105eab78cef9ae87911b8e79a657 = L.circleMarker(
+                [36.0446, 43.4762],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_ffbdcd48d9bfd5207e1673b78245066f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e1fcef53d64ec8ad47fda1dd9e1beb0d = $(`<div id="html_e1fcef53d64ec8ad47fda1dd9e1beb0d" style="width: 100.0%; height: 100.0%;"><b>Negub Tunnel</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/413309737' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_ffbdcd48d9bfd5207e1673b78245066f.setContent(html_e1fcef53d64ec8ad47fda1dd9e1beb0d);
+            
+        
+
+        circle_marker_5a73105eab78cef9ae87911b8e79a657.bindPopup(popup_ffbdcd48d9bfd5207e1673b78245066f)
+        ;
+
+        
+    
+    
+            circle_marker_5a73105eab78cef9ae87911b8e79a657.bindTooltip(
+                `<div>
+                     Negub Tunnel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9c28840c6bac75aa7c8f973e43fdfcb9 = L.circleMarker(
+                [36.09997517089619, 43.331535265776814],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_554643695d13598e33a56902ce9037ff = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_782674dc2af691bb15159eee85865e43 = $(`<div id="html_782674dc2af691bb15159eee85865e43" style="width: 100.0%; height: 100.0%;"><b>Nimrud</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/894019' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_554643695d13598e33a56902ce9037ff.setContent(html_782674dc2af691bb15159eee85865e43);
+            
+        
+
+        circle_marker_9c28840c6bac75aa7c8f973e43fdfcb9.bindPopup(popup_554643695d13598e33a56902ce9037ff)
+        ;
+
+        
+    
+    
+            circle_marker_9c28840c6bac75aa7c8f973e43fdfcb9.bindTooltip(
+                `<div>
+                     Nimrud
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_949663338f4e9fb33ce63561761995bc = L.circleMarker(
+                [36.36076152375775, 43.159936889690734],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_8343885b09bb5f768abee8356bf9fc01 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_44fb937a1e67098b1ffdc2e24948426c = $(`<div id="html_44fb937a1e67098b1ffdc2e24948426c" style="width: 100.0%; height: 100.0%;"><b>Nineveh</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/874621' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_8343885b09bb5f768abee8356bf9fc01.setContent(html_44fb937a1e67098b1ffdc2e24948426c);
+            
+        
+
+        circle_marker_949663338f4e9fb33ce63561761995bc.bindPopup(popup_8343885b09bb5f768abee8356bf9fc01)
+        ;
+
+        
+    
+    
+            circle_marker_949663338f4e9fb33ce63561761995bc.bindTooltip(
+                `<div>
+                     Nineveh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fe259286856edbe854ad7f8e913c0b82 = L.circleMarker(
+                [36.4088442, 43.0774055],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_a15a921682147da062809a95198edb1d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_459a0c81cbcc8d023c9f7dc8da6243bf = $(`<div id="html_459a0c81cbcc8d023c9f7dc8da6243bf" style="width: 100.0%; height: 100.0%;"><b>Tarbisu</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/30774368' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_a15a921682147da062809a95198edb1d.setContent(html_459a0c81cbcc8d023c9f7dc8da6243bf);
+            
+        
+
+        circle_marker_fe259286856edbe854ad7f8e913c0b82.bindPopup(popup_a15a921682147da062809a95198edb1d)
+        ;
+
+        
+    
+    
+            circle_marker_fe259286856edbe854ad7f8e913c0b82.bindTooltip(
+                `<div>
+                     Tarbisu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2f5db0ea0245f51fa515848de9c7401e = L.circleMarker(
+                [36.4332805, 43.3478725],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_9022e5b658888f0b776ebe2b762c0315 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5f7730e0af47feb559e938f9c243a5e0 = $(`<div id="html_5f7730e0af47feb559e938f9c243a5e0" style="width: 100.0%; height: 100.0%;"><b>Tell Billa</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/237391811' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_9022e5b658888f0b776ebe2b762c0315.setContent(html_5f7730e0af47feb559e938f9c243a5e0);
+            
+        
+
+        circle_marker_2f5db0ea0245f51fa515848de9c7401e.bindPopup(popup_9022e5b658888f0b776ebe2b762c0315)
+        ;
+
+        
+    
+    
+            circle_marker_2f5db0ea0245f51fa515848de9c7401e.bindTooltip(
+                `<div>
+                     Tell Billa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_32f75f6fffd8cdf084a38295c7537451 = L.circleMarker(
+                [36.3516938, 44.1158443],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ffe119", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_cdd9d8f666aad29eac7c5c4a941ab35a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_36e3b74e4b89f4de4951c5cfdbd210a2 = $(`<div id="html_36e3b74e4b89f4de4951c5cfdbd210a2" style="width: 100.0%; height: 100.0%;"><b>Wadi Bastura Tunnel</b><br>Region: Assyria<br><a href='https://pleiades.stoa.org/places/359792984' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_cdd9d8f666aad29eac7c5c4a941ab35a.setContent(html_36e3b74e4b89f4de4951c5cfdbd210a2);
+            
+        
+
+        circle_marker_32f75f6fffd8cdf084a38295c7537451.bindPopup(popup_cdd9d8f666aad29eac7c5c4a941ab35a)
+        ;
+
+        
+    
+    
+            circle_marker_32f75f6fffd8cdf084a38295c7537451.bindTooltip(
+                `<div>
+                     Wadi Bastura Tunnel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_57edda2842908570dbd46ac2380d230e = L.circleMarker(
+                [36.8623975, 42.9199576],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4363d8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_dc9f2fafdcd2f2ff83b4adde89922d8f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_71541cf7fc32113af0a4f97aedc2814b = $(`<div id="html_71541cf7fc32113af0a4f97aedc2814b" style="width: 100.0%; height: 100.0%;"><b>Dohuk</b><br>Region: Assyria (Periphery)<br><a href='https://pleiades.stoa.org/places/955792756' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_dc9f2fafdcd2f2ff83b4adde89922d8f.setContent(html_71541cf7fc32113af0a4f97aedc2814b);
+            
+        
+
+        circle_marker_57edda2842908570dbd46ac2380d230e.bindPopup(popup_dc9f2fafdcd2f2ff83b4adde89922d8f)
+        ;
+
+        
+    
+    
+            circle_marker_57edda2842908570dbd46ac2380d230e.bindTooltip(
+                `<div>
+                     Dohuk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_78cf4d96f4c49f47ebed848dbbd44816 = L.circleMarker(
+                [37.384169400000005, 42.36716355714286],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4363d8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_10ac525ee4514d3275bff2bd46ce9af8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5fd13eb011811c24aa8d21f4a5fa015b = $(`<div id="html_5fd13eb011811c24aa8d21f4a5fa015b" style="width: 100.0%; height: 100.0%;"><b>Judi Dagh</b><br>Region: Assyria (Periphery)<br><a href='https://pleiades.stoa.org/places/471828778' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_10ac525ee4514d3275bff2bd46ce9af8.setContent(html_5fd13eb011811c24aa8d21f4a5fa015b);
+            
+        
+
+        circle_marker_78cf4d96f4c49f47ebed848dbbd44816.bindPopup(popup_10ac525ee4514d3275bff2bd46ce9af8)
+        ;
+
+        
+    
+    
+            circle_marker_78cf4d96f4c49f47ebed848dbbd44816.bindTooltip(
+                `<div>
+                     Judi Dagh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6e2c251ed661ddd3b83f61766eeea8cb = L.circleMarker(
+                [34.688473, 44.965073],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4363d8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_37b9c966a7ce7cf90f79f1d65e4cc9fa = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_819dc10596892ff4808a66c22a50fc6a = $(`<div id="html_819dc10596892ff4808a66c22a50fc6a" style="width: 100.0%; height: 100.0%;"><b>Lahiru</b><br>Region: Assyria (Periphery)<br><a href='https://pleiades.stoa.org/places/894031' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_37b9c966a7ce7cf90f79f1d65e4cc9fa.setContent(html_819dc10596892ff4808a66c22a50fc6a);
+            
+        
+
+        circle_marker_6e2c251ed661ddd3b83f61766eeea8cb.bindPopup(popup_37b9c966a7ce7cf90f79f1d65e4cc9fa)
+        ;
+
+        
+    
+    
+            circle_marker_6e2c251ed661ddd3b83f61766eeea8cb.bindTooltip(
+                `<div>
+                     Lahiru
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6c5eadd5c82a02bab8cfec459deaf488 = L.circleMarker(
+                [34.9600076008, 43.6248799595],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4363d8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_63ccfaa0ab7cfe5a6ac24d38502eb213 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d090a826f1e825e916ba930799f29472 = $(`<div id="html_d090a826f1e825e916ba930799f29472" style="width: 100.0%; height: 100.0%;"><b>Larak</b><br>Region: Assyria (Periphery)<br><a href='https://pleiades.stoa.org/places/813485298' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_63ccfaa0ab7cfe5a6ac24d38502eb213.setContent(html_d090a826f1e825e916ba930799f29472);
+            
+        
+
+        circle_marker_6c5eadd5c82a02bab8cfec459deaf488.bindPopup(popup_63ccfaa0ab7cfe5a6ac24d38502eb213)
+        ;
+
+        
+    
+    
+            circle_marker_6c5eadd5c82a02bab8cfec459deaf488.bindTooltip(
+                `<div>
+                     Larak
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5e37a1ccfd28edd0fd7db71134733acd = L.circleMarker(
+                [37.00591665, 42.91355],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4363d8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_01cc4ebdb511b38e7f09075c742bbde9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b510bacf0a518adfa1ac00c83abb5e1a = $(`<div id="html_b510bacf0a518adfa1ac00c83abb5e1a" style="width: 100.0%; height: 100.0%;"><b>Mila Mergi</b><br>Region: Assyria (Periphery)<br><a href='https://pleiades.stoa.org/places/649834357' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_01cc4ebdb511b38e7f09075c742bbde9.setContent(html_b510bacf0a518adfa1ac00c83abb5e1a);
+            
+        
+
+        circle_marker_5e37a1ccfd28edd0fd7db71134733acd.bindPopup(popup_01cc4ebdb511b38e7f09075c742bbde9)
+        ;
+
+        
+    
+    
+            circle_marker_5e37a1ccfd28edd0fd7db71134733acd.bindTooltip(
+                `<div>
+                     Mila Mergi
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1a466b3ee8daa96b61ab9b3cbc40db57 = L.circleMarker(
+                [36.839444, 44.303333],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#4363d8", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_cb62312449a22e550ecae2995a299868 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1e824ec0a5f8933c0438038d1f71c990 = $(`<div id="html_1e824ec0a5f8933c0438038d1f71c990" style="width: 100.0%; height: 100.0%;"><b>Muṣaṣir</b><br>Region: Assyria (Periphery)<br><a href='https://pleiades.stoa.org/places/126728263' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_cb62312449a22e550ecae2995a299868.setContent(html_1e824ec0a5f8933c0438038d1f71c990);
+            
+        
+
+        circle_marker_1a466b3ee8daa96b61ab9b3cbc40db57.bindPopup(popup_cb62312449a22e550ecae2995a299868)
+        ;
+
+        
+    
+    
+            circle_marker_1a466b3ee8daa96b61ab9b3cbc40db57.bindTooltip(
+                `<div>
+                     Muṣaṣir
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9b03a6ee13a4e89c4e303bdfb2d71817 = L.circleMarker(
+                [32.5, 44.5],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_644078c068e0a2cdcc0d8088394874e3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_454607a75dfd87b6a22e6ad3ad835cb6 = $(`<div id="html_454607a75dfd87b6a22e6ad3ad835cb6" style="width: 100.0%; height: 100.0%;"><b>Akkad</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/56567730' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_644078c068e0a2cdcc0d8088394874e3.setContent(html_454607a75dfd87b6a22e6ad3ad835cb6);
+            
+        
+
+        circle_marker_9b03a6ee13a4e89c4e303bdfb2d71817.bindPopup(popup_644078c068e0a2cdcc0d8088394874e3)
+        ;
+
+        
+    
+    
+            circle_marker_9b03a6ee13a4e89c4e303bdfb2d71817.bindTooltip(
+                `<div>
+                     Akkad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7d85a5e9c326d05f9ee86fbe3f92e77a = L.circleMarker(
+                [32.53729695, 44.42497815],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_10409ec5383e24855850e4feaafa44e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_253bd539300af05ff98095dc51e7161b = $(`<div id="html_253bd539300af05ff98095dc51e7161b" style="width: 100.0%; height: 100.0%;"><b>Babylon</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/893951' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_10409ec5383e24855850e4feaafa44e8.setContent(html_253bd539300af05ff98095dc51e7161b);
+            
+        
+
+        circle_marker_7d85a5e9c326d05f9ee86fbe3f92e77a.bindPopup(popup_10409ec5383e24855850e4feaafa44e8)
+        ;
+
+        
+    
+    
+            circle_marker_7d85a5e9c326d05f9ee86fbe3f92e77a.bindTooltip(
+                `<div>
+                     Babylon
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8eda3211baf3bd06ecde25e0ae5e9fea = L.circleMarker(
+                [32.3924, 44.3434],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_8ae1008df0c26c02c778ce4afb5c4f2d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7806d1389b8a8827efde73279f2a56ff = $(`<div id="html_7806d1389b8a8827efde73279f2a56ff" style="width: 100.0%; height: 100.0%;"><b>Borsippa</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/893964' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_8ae1008df0c26c02c778ce4afb5c4f2d.setContent(html_7806d1389b8a8827efde73279f2a56ff);
+            
+        
+
+        circle_marker_8eda3211baf3bd06ecde25e0ae5e9fea.bindPopup(popup_8ae1008df0c26c02c778ce4afb5c4f2d)
+        ;
+
+        
+    
+    
+            circle_marker_8eda3211baf3bd06ecde25e0ae5e9fea.bindTooltip(
+                `<div>
+                     Borsippa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1e9954b2296b5d3e6b2d35712cc85cc7 = L.circleMarker(
+                [32.29579523333334, 44.46689346666667],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_a155bd14ae24589e0a0d5f65c4eea795 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ec39bb52b3481e5a88fe3a5c4032bc22 = $(`<div id="html_ec39bb52b3481e5a88fe3a5c4032bc22" style="width: 100.0%; height: 100.0%;"><b>Dilbat</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/893987' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_a155bd14ae24589e0a0d5f65c4eea795.setContent(html_ec39bb52b3481e5a88fe3a5c4032bc22);
+            
+        
+
+        circle_marker_1e9954b2296b5d3e6b2d35712cc85cc7.bindPopup(popup_a155bd14ae24589e0a0d5f65c4eea795)
+        ;
+
+        
+    
+    
+            circle_marker_1e9954b2296b5d3e6b2d35712cc85cc7.bindTooltip(
+                `<div>
+                     Dilbat
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4db5c3cb74af0125c9181f4de064269e = L.circleMarker(
+                [33.35607304048341, 44.197416520972745],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_f36b2c34c6021edabb6dba02b40aad55 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_31c482a67c641596439a8d3add3afeb5 = $(`<div id="html_31c482a67c641596439a8d3add3afeb5" style="width: 100.0%; height: 100.0%;"><b>Dur-Kurigalzu</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/893988' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_f36b2c34c6021edabb6dba02b40aad55.setContent(html_31c482a67c641596439a8d3add3afeb5);
+            
+        
+
+        circle_marker_4db5c3cb74af0125c9181f4de064269e.bindPopup(popup_f36b2c34c6021edabb6dba02b40aad55)
+        ;
+
+        
+    
+    
+            circle_marker_4db5c3cb74af0125c9181f4de064269e.bindTooltip(
+                `<div>
+                     Dur-Kurigalzu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b5fe851273748b9ff8278c403eb93b5d = L.circleMarker(
+                [32.5460878, 44.59316393333333],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_8997723be1b8746d408a2c8a6bea89a3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a716a6a4cd32b55f805572f51934a61c = $(`<div id="html_a716a6a4cd32b55f805572f51934a61c" style="width: 100.0%; height: 100.0%;"><b>Kish</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/894028' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_8997723be1b8746d408a2c8a6bea89a3.setContent(html_a716a6a4cd32b55f805572f51934a61c);
+            
+        
+
+        circle_marker_b5fe851273748b9ff8278c403eb93b5d.bindPopup(popup_8997723be1b8746d408a2c8a6bea89a3)
+        ;
+
+        
+    
+    
+            circle_marker_b5fe851273748b9ff8278c403eb93b5d.bindTooltip(
+                `<div>
+                     Kish
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_721900c34f184a1ffbbce3964218b746 = L.circleMarker(
+                [32.76070982402899, 44.61139350591287],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_15409ae2381494671c71fd8983e9e003 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_313f47f39f1bd6e8d0ed40a7b9319cc6 = $(`<div id="html_313f47f39f1bd6e8d0ed40a7b9319cc6" style="width: 100.0%; height: 100.0%;"><b>Kutha</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/893977' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_15409ae2381494671c71fd8983e9e003.setContent(html_313f47f39f1bd6e8d0ed40a7b9319cc6);
+            
+        
+
+        circle_marker_721900c34f184a1ffbbce3964218b746.bindPopup(popup_15409ae2381494671c71fd8983e9e003)
+        ;
+
+        
+    
+    
+            circle_marker_721900c34f184a1ffbbce3964218b746.bindTooltip(
+                `<div>
+                     Kutha
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c359a84b7eeafae1530c4ad1557b5ec7 = L.circleMarker(
+                [32.08143295, 44.7855561],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_262f8d2577b55835ee2c47eee22beee3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b5eb9ba5b4080ddc9f6589f13ca53999 = $(`<div id="html_b5eb9ba5b4080ddc9f6589f13ca53999" style="width: 100.0%; height: 100.0%;"><b>Marad</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/912901' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_262f8d2577b55835ee2c47eee22beee3.setContent(html_b5eb9ba5b4080ddc9f6589f13ca53999);
+            
+        
+
+        circle_marker_c359a84b7eeafae1530c4ad1557b5ec7.bindPopup(popup_262f8d2577b55835ee2c47eee22beee3)
+        ;
+
+        
+    
+    
+            circle_marker_c359a84b7eeafae1530c4ad1557b5ec7.bindTooltip(
+                `<div>
+                     Marad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4cbffb3b778c62efb3a77230cba2f204 = L.circleMarker(
+                [33.05973769416011, 44.254243286471],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f58231", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_9d522f1ac918fed3dda39f744d2843dd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_33d8cbf4c3e695142ce24008ac706ca4 = $(`<div id="html_33d8cbf4c3e695142ce24008ac706ca4" style="width: 100.0%; height: 100.0%;"><b>Sippar</b><br>Region: Babylonia (North)<br><a href='https://pleiades.stoa.org/places/894089' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_9d522f1ac918fed3dda39f744d2843dd.setContent(html_33d8cbf4c3e695142ce24008ac706ca4);
+            
+        
+
+        circle_marker_4cbffb3b778c62efb3a77230cba2f204.bindPopup(popup_9d522f1ac918fed3dda39f744d2843dd)
+        ;
+
+        
+    
+    
+            circle_marker_4cbffb3b778c62efb3a77230cba2f204.bindTooltip(
+                `<div>
+                     Sippar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_86784381acdf4db8c7b743b483fb8a72 = L.circleMarker(
+                [31.885315329920655, 45.26927261813815],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#911eb4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_5b359452bb8f2fc8e224730a394e4769 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_977452d92091326d5a7718dda86bf06c = $(`<div id="html_977452d92091326d5a7718dda86bf06c" style="width: 100.0%; height: 100.0%;"><b>Isin</b><br>Region: Babylonia (South)<br><a href='https://pleiades.stoa.org/places/912868' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_5b359452bb8f2fc8e224730a394e4769.setContent(html_977452d92091326d5a7718dda86bf06c);
+            
+        
+
+        circle_marker_86784381acdf4db8c7b743b483fb8a72.bindPopup(popup_5b359452bb8f2fc8e224730a394e4769)
+        ;
+
+        
+    
+    
+            circle_marker_86784381acdf4db8c7b743b483fb8a72.bindTooltip(
+                `<div>
+                     Isin
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7dc17161add4ec950455464e7790e86a = L.circleMarker(
+                [30.774, 46.3659],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#911eb4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_961e4e6c845552795040479ef4d028b2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_df20cbccd7a3d4117a8fcb6296770796 = $(`<div id="html_df20cbccd7a3d4117a8fcb6296770796" style="width: 100.0%; height: 100.0%;"><b>Kissik</b><br>Region: Babylonia (South)<br><a href='https://pleiades.stoa.org/places/912953' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_961e4e6c845552795040479ef4d028b2.setContent(html_df20cbccd7a3d4117a8fcb6296770796);
+            
+        
+
+        circle_marker_7dc17161add4ec950455464e7790e86a.bindPopup(popup_961e4e6c845552795040479ef4d028b2)
+        ;
+
+        
+    
+    
+            circle_marker_7dc17161add4ec950455464e7790e86a.bindTooltip(
+                `<div>
+                     Kissik
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2d31401005522fd326865a5b8056ffc1 = L.circleMarker(
+                [31.2832165, 45.852450000000005],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#911eb4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_e5901e89c9397a7b317d463ac19c4bb3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9928b3485694e76248d2f4124533d898 = $(`<div id="html_9928b3485694e76248d2f4124533d898" style="width: 100.0%; height: 100.0%;"><b>Larsa</b><br>Region: Babylonia (South)<br><a href='https://pleiades.stoa.org/places/912897' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_e5901e89c9397a7b317d463ac19c4bb3.setContent(html_9928b3485694e76248d2f4124533d898);
+            
+        
+
+        circle_marker_2d31401005522fd326865a5b8056ffc1.bindPopup(popup_e5901e89c9397a7b317d463ac19c4bb3)
+        ;
+
+        
+    
+    
+            circle_marker_2d31401005522fd326865a5b8056ffc1.bindTooltip(
+                `<div>
+                     Larsa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4d93688e327cc79b5e754eab530f5249 = L.circleMarker(
+                [32.126762633333335, 45.23056353333333],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#911eb4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_482646196350cd8bfba8e5c096474029 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e783d639e41722ffc9482a7028575c8d = $(`<div id="html_e783d639e41722ffc9482a7028575c8d" style="width: 100.0%; height: 100.0%;"><b>Nippur</b><br>Region: Babylonia (South)<br><a href='https://pleiades.stoa.org/places/912910' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_482646196350cd8bfba8e5c096474029.setContent(html_e783d639e41722ffc9482a7028575c8d);
+            
+        
+
+        circle_marker_4d93688e327cc79b5e754eab530f5249.bindPopup(popup_482646196350cd8bfba8e5c096474029)
+        ;
+
+        
+    
+    
+            circle_marker_4d93688e327cc79b5e754eab530f5249.bindTooltip(
+                `<div>
+                     Nippur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_13093c077bd11a82046a2016bdace10c = L.circleMarker(
+                [30.96131794655308, 46.10541981168791],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#911eb4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_6442e148b915767427de82c013632e78 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2e12de1ac6995d7b80f8307a16c62fa7 = $(`<div id="html_2e12de1ac6995d7b80f8307a16c62fa7" style="width: 100.0%; height: 100.0%;"><b>Ur</b><br>Region: Babylonia (South)<br><a href='https://pleiades.stoa.org/places/912985' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_6442e148b915767427de82c013632e78.setContent(html_2e12de1ac6995d7b80f8307a16c62fa7);
+            
+        
+
+        circle_marker_13093c077bd11a82046a2016bdace10c.bindPopup(popup_6442e148b915767427de82c013632e78)
+        ;
+
+        
+    
+    
+            circle_marker_13093c077bd11a82046a2016bdace10c.bindTooltip(
+                `<div>
+                     Ur
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c643222cdd74f80d07b594697ad0ef77 = L.circleMarker(
+                [31.32337501090747, 45.6390521574333],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#911eb4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_07381fb47441fd4b0af2832df1f9cbe5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_80bac6b997ecaea0206be3aa48921ac0 = $(`<div id="html_80bac6b997ecaea0206be3aa48921ac0" style="width: 100.0%; height: 100.0%;"><b>Uruk</b><br>Region: Babylonia (South)<br><a href='https://pleiades.stoa.org/places/912986' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_07381fb47441fd4b0af2832df1f9cbe5.setContent(html_80bac6b997ecaea0206be3aa48921ac0);
+            
+        
+
+        circle_marker_c643222cdd74f80d07b594697ad0ef77.bindPopup(popup_07381fb47441fd4b0af2832df1f9cbe5)
+        ;
+
+        
+    
+    
+            circle_marker_c643222cdd74f80d07b594697ad0ef77.bindTooltip(
+                `<div>
+                     Uruk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b292ece5c2cd20e40e3cbd6e4aabf42f = L.circleMarker(
+                [33.11927753333334, 45.937332966666666],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#46f0f0", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b85e0a16136b6dbc020fb8cf1ae5577e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_905ec733956c68d80b1166d34de7f530 = $(`<div id="html_905ec733956c68d80b1166d34de7f530" style="width: 100.0%; height: 100.0%;"><b>Der</b><br>Region: Eastern Mesopotamia<br><a href='https://pleiades.stoa.org/places/903013' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b85e0a16136b6dbc020fb8cf1ae5577e.setContent(html_905ec733956c68d80b1166d34de7f530);
+            
+        
+
+        circle_marker_b292ece5c2cd20e40e3cbd6e4aabf42f.bindPopup(popup_b85e0a16136b6dbc020fb8cf1ae5577e)
+        ;
+
+        
+    
+    
+            circle_marker_b292ece5c2cd20e40e3cbd6e4aabf42f.bindTooltip(
+                `<div>
+                     Der
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8939c8aec052a68c1e656cc3584d8dd = L.circleMarker(
+                [34.1928, 45.0563],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#46f0f0", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_1a6da33322fabd8f522cf6b54626f549 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_52d2bb46a8f3e1c5dea3ea5ee2c73691 = $(`<div id="html_52d2bb46a8f3e1c5dea3ea5ee2c73691" style="width: 100.0%; height: 100.0%;"><b>Me-Turran</b><br>Region: Eastern Mesopotamia<br><a href='https://pleiades.stoa.org/places/894042' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_1a6da33322fabd8f522cf6b54626f549.setContent(html_52d2bb46a8f3e1c5dea3ea5ee2c73691);
+            
+        
+
+        circle_marker_f8939c8aec052a68c1e656cc3584d8dd.bindPopup(popup_1a6da33322fabd8f522cf6b54626f549)
+        ;
+
+        
+    
+    
+            circle_marker_f8939c8aec052a68c1e656cc3584d8dd.bindTooltip(
+                `<div>
+                     Me-Turran
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0c5475438b30eff637f1e0f48c6b7d46 = L.circleMarker(
+                [31.6995707721, 49.6181605827],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_93838c2acfc5bf30ea71af0b233becdd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3a317895399bb4b04a15e4fbffa888b7 = $(`<div id="html_3a317895399bb4b04a15e4fbffa888b7" style="width: 100.0%; height: 100.0%;"><b>Elam</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/912842' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_93838c2acfc5bf30ea71af0b233becdd.setContent(html_3a317895399bb4b04a15e4fbffa888b7);
+            
+        
+
+        circle_marker_0c5475438b30eff637f1e0f48c6b7d46.bindPopup(popup_93838c2acfc5bf30ea71af0b233becdd)
+        ;
+
+        
+    
+    
+            circle_marker_0c5475438b30eff637f1e0f48c6b7d46.bindTooltip(
+                `<div>
+                     Elam
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6c535fd027e7874bbb44d6158aa73f53 = L.circleMarker(
+                [33.1998, 47.601],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_34f9780d051a3cc94ef1312b40ff3773 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0d5849796c97527e64588958d9ed8c4e = $(`<div id="html_0d5849796c97527e64588958d9ed8c4e" style="width: 100.0%; height: 100.0%;"><b>Kalmākarra</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/764638887' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_34f9780d051a3cc94ef1312b40ff3773.setContent(html_0d5849796c97527e64588958d9ed8c4e);
+            
+        
+
+        circle_marker_6c535fd027e7874bbb44d6158aa73f53.bindPopup(popup_34f9780d051a3cc94ef1312b40ff3773)
+        ;
+
+        
+    
+    
+            circle_marker_6c535fd027e7874bbb44d6158aa73f53.bindTooltip(
+                `<div>
+                     Kalmākarra
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_69d236f298ba357c4e76a08d82d1fadd = L.circleMarker(
+                [33.5, 48.66667],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_e9a5d7061631ef3eb27feae32da9a01c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_044484e283748f5bbe0437bc2bc2e8c6 = $(`<div id="html_044484e283748f5bbe0437bc2bc2e8c6" style="width: 100.0%; height: 100.0%;"><b>Luristan</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/191400484' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_e9a5d7061631ef3eb27feae32da9a01c.setContent(html_044484e283748f5bbe0437bc2bc2e8c6);
+            
+        
+
+        circle_marker_69d236f298ba357c4e76a08d82d1fadd.bindPopup(popup_e9a5d7061631ef3eb27feae32da9a01c)
+        ;
+
+        
+    
+    
+            circle_marker_69d236f298ba357c4e76a08d82d1fadd.bindTooltip(
+                `<div>
+                     Luristan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_11f7bb92c17199e31285cc0c4b6e727a = L.circleMarker(
+                [34.652384600000005, 47.975168],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_bc5d880b3a721a886f34586df6431f6e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b05ec0e64c4a3c493ede9084b481573d = $(`<div id="html_b05ec0e64c4a3c493ede9084b481573d" style="width: 100.0%; height: 100.0%;"><b>Najafabad</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/811827554' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_bc5d880b3a721a886f34586df6431f6e.setContent(html_b05ec0e64c4a3c493ede9084b481573d);
+            
+        
+
+        circle_marker_11f7bb92c17199e31285cc0c4b6e727a.bindPopup(popup_bc5d880b3a721a886f34586df6431f6e)
+        ;
+
+        
+    
+    
+            circle_marker_11f7bb92c17199e31285cc0c4b6e727a.bindTooltip(
+                `<div>
+                     Najafabad
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19ef03c97b92782d6f6a36165e07bed2 = L.circleMarker(
+                [29.98865645840391, 52.87460546013768],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_e7dece0369d616f0df614fdde8402ce4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c87471024f04514151f57bbded48a386 = $(`<div id="html_c87471024f04514151f57bbded48a386" style="width: 100.0%; height: 100.0%;"><b>Naqsh-I Rustam</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/922685' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_e7dece0369d616f0df614fdde8402ce4.setContent(html_c87471024f04514151f57bbded48a386);
+            
+        
+
+        circle_marker_19ef03c97b92782d6f6a36165e07bed2.bindPopup(popup_e7dece0369d616f0df614fdde8402ce4)
+        ;
+
+        
+    
+    
+            circle_marker_19ef03c97b92782d6f6a36165e07bed2.bindTooltip(
+                `<div>
+                     Naqsh-I Rustam
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cbb1d45fd9a84d0a057930d8f2cabf70 = L.circleMarker(
+                [29.93519729783907, 52.8904279399187],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_70f463f944de405d5c491e7d0b39db7a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7a54f4da60580b6cf670c42689f8aa53 = $(`<div id="html_7a54f4da60580b6cf670c42689f8aa53" style="width: 100.0%; height: 100.0%;"><b>Persepolis</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/922695' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_70f463f944de405d5c491e7d0b39db7a.setContent(html_7a54f4da60580b6cf670c42689f8aa53);
+            
+        
+
+        circle_marker_cbb1d45fd9a84d0a057930d8f2cabf70.bindPopup(popup_70f463f944de405d5c491e7d0b39db7a)
+        ;
+
+        
+    
+    
+            circle_marker_cbb1d45fd9a84d0a057930d8f2cabf70.bindTooltip(
+                `<div>
+                     Persepolis
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7c023cea7ca3f8f86844b4afa27110d2 = L.circleMarker(
+                [35.4896686, 46.17783985],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_ff8f5cf605b6543678cdd3a740b55261 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1702be02de23708619a4ff23b0dc15cc = $(`<div id="html_1702be02de23708619a4ff23b0dc15cc" style="width: 100.0%; height: 100.0%;"><b>Qalʾeh-i Imam</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/858969850' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_ff8f5cf605b6543678cdd3a740b55261.setContent(html_1702be02de23708619a4ff23b0dc15cc);
+            
+        
+
+        circle_marker_7c023cea7ca3f8f86844b4afa27110d2.bindPopup(popup_ff8f5cf605b6543678cdd3a740b55261)
+        ;
+
+        
+    
+    
+            circle_marker_7c023cea7ca3f8f86844b4afa27110d2.bindTooltip(
+                `<div>
+                     Qalʾeh-i Imam
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_10f113d66f6057e6bcf660b62abfa2e3 = L.circleMarker(
+                [32.189934471571, 48.253537054323495],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_07c8cdbc007a58ab6c8037ceac508a91 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f8aa52de074536becf6d0d94b8781efa = $(`<div id="html_f8aa52de074536becf6d0d94b8781efa" style="width: 100.0%; height: 100.0%;"><b>Susa</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/912936' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_07c8cdbc007a58ab6c8037ceac508a91.setContent(html_f8aa52de074536becf6d0d94b8781efa);
+            
+        
+
+        circle_marker_10f113d66f6057e6bcf660b62abfa2e3.bindPopup(popup_07c8cdbc007a58ab6c8037ceac508a91)
+        ;
+
+        
+    
+    
+            circle_marker_10f113d66f6057e6bcf660b62abfa2e3.bindTooltip(
+                `<div>
+                     Susa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8ea62f81403a546db5268e7cc3793e03 = L.circleMarker(
+                [35.0042587, 46.62359516666667],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_f7c43853defce8f2c1cc8d2e70c1e963 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_73d3db225227ea4a3446b257e64c128b = $(`<div id="html_73d3db225227ea4a3446b257e64c128b" style="width: 100.0%; height: 100.0%;"><b>Tang-i Var</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/155838204' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_f7c43853defce8f2c1cc8d2e70c1e963.setContent(html_73d3db225227ea4a3446b257e64c128b);
+            
+        
+
+        circle_marker_8ea62f81403a546db5268e7cc3793e03.bindPopup(popup_f7c43853defce8f2c1cc8d2e70c1e963)
+        ;
+
+        
+    
+    
+            circle_marker_8ea62f81403a546db5268e7cc3793e03.bindTooltip(
+                `<div>
+                     Tang-i Var
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8f65756f88e4b9f454e559834bd05bea = L.circleMarker(
+                [34.63049266666666, 46.57977400000001],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f032e6", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_19a3fa04af82b48e0d56859cd6feb245 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_710682d6cc4e38389307e046b3fd9fd2 = $(`<div id="html_710682d6cc4e38389307e046b3fd9fd2" style="width: 100.0%; height: 100.0%;"><b>Zalu-Ab</b><br>Region: Iran/Elam<br><a href='https://pleiades.stoa.org/places/420860522' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_19a3fa04af82b48e0d56859cd6feb245.setContent(html_710682d6cc4e38389307e046b3fd9fd2);
+            
+        
+
+        circle_marker_8f65756f88e4b9f454e559834bd05bea.bindPopup(popup_19a3fa04af82b48e0d56859cd6feb245)
+        ;
+
+        
+    
+    
+            circle_marker_8f65756f88e4b9f454e559834bd05bea.bindTooltip(
+                `<div>
+                     Zalu-Ab
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_02fb320993dbcb0f3f43aa1dc03b4277 = L.circleMarker(
+                [31.78042631529533, 34.62164696402221],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_aa9fb785a77a8e4d1851845a6170afbb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b4b732ec6484f47ab01a2f3aa6715e47 = $(`<div id="html_b4b732ec6484f47ab01a2f3aa6715e47" style="width: 100.0%; height: 100.0%;"><b>Ashdod</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/687843' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_aa9fb785a77a8e4d1851845a6170afbb.setContent(html_b4b732ec6484f47ab01a2f3aa6715e47);
+            
+        
+
+        circle_marker_02fb320993dbcb0f3f43aa1dc03b4277.bindPopup(popup_aa9fb785a77a8e4d1851845a6170afbb)
+        ;
+
+        
+    
+    
+            circle_marker_02fb320993dbcb0f3f43aa1dc03b4277.bindTooltip(
+                `<div>
+                     Ashdod
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2e81c09f525dbb56d806c5748f9d1d00 = L.circleMarker(
+                [31.94454115, 34.94298475],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_46a4a7c682a832b00976eef6d3ae9bd6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8af3dbbfcf21b8976ff85aec14e620ff = $(`<div id="html_8af3dbbfcf21b8976ff85aec14e620ff" style="width: 100.0%; height: 100.0%;"><b>Ben Shemen</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/413309736' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_46a4a7c682a832b00976eef6d3ae9bd6.setContent(html_8af3dbbfcf21b8976ff85aec14e620ff);
+            
+        
+
+        circle_marker_2e81c09f525dbb56d806c5748f9d1d00.bindPopup(popup_46a4a7c682a832b00976eef6d3ae9bd6)
+        ;
+
+        
+    
+    
+            circle_marker_2e81c09f525dbb56d806c5748f9d1d00.bindTooltip(
+                `<div>
+                     Ben Shemen
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a5a4293e3887752fe79f8cf0faab0e65 = L.circleMarker(
+                [34.430959, 36.3115835],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_26782dba64b33debb555e8a9daf253c1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a4d5d5a70cb8cf9fe8b439b147ff00e1 = $(`<div id="html_a4d5d5a70cb8cf9fe8b439b147ff00e1" style="width: 100.0%; height: 100.0%;"><b>Brissa</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/809004346' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_26782dba64b33debb555e8a9daf253c1.setContent(html_a4d5d5a70cb8cf9fe8b439b147ff00e1);
+            
+        
+
+        circle_marker_a5a4293e3887752fe79f8cf0faab0e65.bindPopup(popup_26782dba64b33debb555e8a9daf253c1)
+        ;
+
+        
+    
+    
+            circle_marker_a5a4293e3887752fe79f8cf0faab0e65.bindTooltip(
+                `<div>
+                     Brissa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c3fa73b0a9fdabdab89886fad4945554 = L.circleMarker(
+                [34.11924879240043, 35.64612465977221],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_cd9665b5b276f8dba2da695d844bb035 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_141872ce73930b7aa1dbd3978c594014 = $(`<div id="html_141872ce73930b7aa1dbd3978c594014" style="width: 100.0%; height: 100.0%;"><b>Byblos</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/668216' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_cd9665b5b276f8dba2da695d844bb035.setContent(html_141872ce73930b7aa1dbd3978c594014);
+            
+        
+
+        circle_marker_c3fa73b0a9fdabdab89886fad4945554.bindPopup(popup_cd9665b5b276f8dba2da695d844bb035)
+        ;
+
+        
+    
+    
+            circle_marker_c3fa73b0a9fdabdab89886fad4945554.bindTooltip(
+                `<div>
+                     Byblos
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4e05a4e432ab9457c42180dc23e1f5b0 = L.circleMarker(
+                [34.916662, 33.633337],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_60b05f7974d1920d463da5c8abced15f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c501a232c494b0f6e0e68a3fca1501d3 = $(`<div id="html_c501a232c494b0f6e0e68a3fca1501d3" style="width: 100.0%; height: 100.0%;"><b>Larnaka</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/707556' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_60b05f7974d1920d463da5c8abced15f.setContent(html_c501a232c494b0f6e0e68a3fca1501d3);
+            
+        
+
+        circle_marker_4e05a4e432ab9457c42180dc23e1f5b0.bindPopup(popup_60b05f7974d1920d463da5c8abced15f)
+        ;
+
+        
+    
+    
+            circle_marker_4e05a4e432ab9457c42180dc23e1f5b0.bindTooltip(
+                `<div>
+                     Larnaka
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a6aa6bfdfdc2b0d99fd8637564fca68d = L.circleMarker(
+                [33.955422666666664, 35.597074666666664],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_fa7568cc601014adda0d4828f0a571d0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7c4565e8253731f2d8bbee2f78c82bca = $(`<div id="html_7c4565e8253731f2d8bbee2f78c82bca" style="width: 100.0%; height: 100.0%;"><b>Nahr el-Kelb</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/2970016' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_fa7568cc601014adda0d4828f0a571d0.setContent(html_7c4565e8253731f2d8bbee2f78c82bca);
+            
+        
+
+        circle_marker_a6aa6bfdfdc2b0d99fd8637564fca68d.bindPopup(popup_fa7568cc601014adda0d4828f0a571d0)
+        ;
+
+        
+    
+    
+            circle_marker_a6aa6bfdfdc2b0d99fd8637564fca68d.bindTooltip(
+                `<div>
+                     Nahr el-Kelb
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5c2429959a25897b3add8f7ba2c01434 = L.circleMarker(
+                [32.27644536250876, 35.19008143859431],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_28383355a183b528b39412158dae73d1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_add01f1c6ad1aa97495d5d3c01cfdf44 = $(`<div id="html_add01f1c6ad1aa97495d5d3c01cfdf44" style="width: 100.0%; height: 100.0%;"><b>Samaria</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/678370' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_28383355a183b528b39412158dae73d1.setContent(html_add01f1c6ad1aa97495d5d3c01cfdf44);
+            
+        
+
+        circle_marker_5c2429959a25897b3add8f7ba2c01434.bindPopup(popup_28383355a183b528b39412158dae73d1)
+        ;
+
+        
+    
+    
+            circle_marker_5c2429959a25897b3add8f7ba2c01434.bindTooltip(
+                `<div>
+                     Samaria
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d56ae6d372b739267c742fdf816e4040 = L.circleMarker(
+                [30.7504121, 35.7265981],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_09d5df6afef03fb5c25028c75249fd57 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_01bebc7de9667123d545dbcb874989ad = $(`<div id="html_01bebc7de9667123d545dbcb874989ad" style="width: 100.0%; height: 100.0%;"><b>Selaʾ</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/86623849' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_09d5df6afef03fb5c25028c75249fd57.setContent(html_01bebc7de9667123d545dbcb874989ad);
+            
+        
+
+        circle_marker_d56ae6d372b739267c742fdf816e4040.bindPopup(popup_09d5df6afef03fb5c25028c75249fd57)
+        ;
+
+        
+    
+    
+            circle_marker_d56ae6d372b739267c742fdf816e4040.bindTooltip(
+                `<div>
+                     Selaʾ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2c7b9c43ef3e90d901b974d2b527dd21 = L.circleMarker(
+                [34.7084831043, 35.9862205324],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#bcf60c", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_555f819823839d84a33915a320fe0a79 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4c1d72c04aff39f0a34eb9f975d01dca = $(`<div id="html_4c1d72c04aff39f0a34eb9f975d01dca" style="width: 100.0%; height: 100.0%;"><b>Simyra</b><br>Region: Levant<br><a href='https://pleiades.stoa.org/places/668372' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_555f819823839d84a33915a320fe0a79.setContent(html_4c1d72c04aff39f0a34eb9f975d01dca);
+            
+        
+
+        circle_marker_2c7b9c43ef3e90d901b974d2b527dd21.bindPopup(popup_555f819823839d84a33915a320fe0a79)
+        ;
+
+        
+    
+    
+            circle_marker_2c7b9c43ef3e90d901b974d2b527dd21.bindTooltip(
+                `<div>
+                     Simyra
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_20787be5eebf75fe028ee4e710526fe1 = L.circleMarker(
+                [34.4678, 41.9794],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_9341a077225d6b68315e227b5bbc9e63 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1037bf7f0cf677e016f31a4babbfd442 = $(`<div id="html_1037bf7f0cf677e016f31a4babbfd442" style="width: 100.0%; height: 100.0%;"><b>Ana</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/893936' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_9341a077225d6b68315e227b5bbc9e63.setContent(html_1037bf7f0cf677e016f31a4babbfd442);
+            
+        
+
+        circle_marker_20787be5eebf75fe028ee4e710526fe1.bindPopup(popup_9341a077225d6b68315e227b5bbc9e63)
+        ;
+
+        
+    
+    
+            circle_marker_20787be5eebf75fe028ee4e710526fe1.bindTooltip(
+                `<div>
+                     Ana
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f64575fba295f3deafb0a53dfedb3adb = L.circleMarker(
+                [34.45353575, 41.9911905],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b070cd53159ef538bea12e6b11567679 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f3aecec6289ea42f9f59070ac53490e9 = $(`<div id="html_f3aecec6289ea42f9f59070ac53490e9" style="width: 100.0%; height: 100.0%;"><b>Dawali</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/945906723' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b070cd53159ef538bea12e6b11567679.setContent(html_f3aecec6289ea42f9f59070ac53490e9);
+            
+        
+
+        circle_marker_f64575fba295f3deafb0a53dfedb3adb.bindPopup(popup_b070cd53159ef538bea12e6b11567679)
+        ;
+
+        
+    
+    
+            circle_marker_f64575fba295f3deafb0a53dfedb3adb.bindTooltip(
+                `<div>
+                     Dawali
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cfb0c54d50b445891765492f9b133222 = L.circleMarker(
+                [34.389685, 41.027992],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_cd7668cb24267e8fae9ddc5a086c34f8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2b96e4d66500cc551fb1f9fb7d1fb3b3 = $(`<div id="html_2b96e4d66500cc551fb1f9fb7d1fb3b3" style="width: 100.0%; height: 100.0%;"><b>Hindanu</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/894006' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_cd7668cb24267e8fae9ddc5a086c34f8.setContent(html_2b96e4d66500cc551fb1f9fb7d1fb3b3);
+            
+        
+
+        circle_marker_cfb0c54d50b445891765492f9b133222.bindPopup(popup_cd7668cb24267e8fae9ddc5a086c34f8)
+        ;
+
+        
+    
+    
+            circle_marker_cfb0c54d50b445891765492f9b133222.bindTooltip(
+                `<div>
+                     Hindanu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7d2c4f420197a582572d6a16dde654cc = L.circleMarker(
+                [34.3857, 42.030576],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_7836c1f0f82cf0828d081d66417768dc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9574274e9adbac26697ff8cf8798cdfe = $(`<div id="html_9574274e9adbac26697ff8cf8798cdfe" style="width: 100.0%; height: 100.0%;"><b>Judeideh</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/945906724' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_7836c1f0f82cf0828d081d66417768dc.setContent(html_9574274e9adbac26697ff8cf8798cdfe);
+            
+        
+
+        circle_marker_7d2c4f420197a582572d6a16dde654cc.bindPopup(popup_7836c1f0f82cf0828d081d66417768dc)
+        ;
+
+        
+    
+    
+            circle_marker_7d2c4f420197a582572d6a16dde654cc.bindTooltip(
+                `<div>
+                     Judeideh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_440c1dd7840d824917bf01c892409d64 = L.circleMarker(
+                [34.309098, 42.199709],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b7b540653724448218755f16f5361e22 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_56cacb7b722dc93e33a32a8a5eb38fa6 = $(`<div id="html_56cacb7b722dc93e33a32a8a5eb38fa6" style="width: 100.0%; height: 100.0%;"><b>Sur Jureh</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/413309738' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b7b540653724448218755f16f5361e22.setContent(html_56cacb7b722dc93e33a32a8a5eb38fa6);
+            
+        
+
+        circle_marker_440c1dd7840d824917bf01c892409d64.bindPopup(popup_b7b540653724448218755f16f5361e22)
+        ;
+
+        
+    
+    
+            circle_marker_440c1dd7840d824917bf01c892409d64.bindTooltip(
+                `<div>
+                     Sur Jureh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7f386fcde92e660a2a098aaf08e6c778 = L.circleMarker(
+                [33.6436, 42.8215],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_bcdeff749aceefb09548df1b4f62c8eb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_366e82e840fc289df1c324e282a6a5da = $(`<div id="html_366e82e840fc289df1c324e282a6a5da" style="width: 100.0%; height: 100.0%;"><b>Tell Satu Qala</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/894008' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_bcdeff749aceefb09548df1b4f62c8eb.setContent(html_366e82e840fc289df1c324e282a6a5da);
+            
+        
+
+        circle_marker_7f386fcde92e660a2a098aaf08e6c778.bindPopup(popup_bcdeff749aceefb09548df1b4f62c8eb)
+        ;
+
+        
+    
+    
+            circle_marker_7f386fcde92e660a2a098aaf08e6c778.bindTooltip(
+                `<div>
+                     Tell Satu Qala
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b3f7db30721101054c5c1f7b65da0cb3 = L.circleMarker(
+                [34.29230149999999, 42.1739115],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#fabebe", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_91d0bd1ed8c8b0618b51f298e32545e6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_634ab3d2a88c4b12ac9a7dd5bb34a4ed = $(`<div id="html_634ab3d2a88c4b12ac9a7dd5bb34a4ed" style="width: 100.0%; height: 100.0%;"><b>Zawiyeh</b><br>Region: Middle Euphrates<br><a href='https://pleiades.stoa.org/places/767486703' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_91d0bd1ed8c8b0618b51f298e32545e6.setContent(html_634ab3d2a88c4b12ac9a7dd5bb34a4ed);
+            
+        
+
+        circle_marker_b3f7db30721101054c5c1f7b65da0cb3.bindPopup(popup_91d0bd1ed8c8b0618b51f298e32545e6)
+        ;
+
+        
+    
+    
+            circle_marker_b3f7db30721101054c5c1f7b65da0cb3.bindTooltip(
+                `<div>
+                     Zawiyeh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51d9b29ef5be699dbc999679769b765b = L.circleMarker(
+                [36.2225515, 36.183214],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_14437cf2f4e55762f4d74082b0bec2f4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7b5b6279d9db4a8c7cf78a578e9ad9c1 = $(`<div id="html_7b5b6279d9db4a8c7cf78a578e9ad9c1" style="width: 100.0%; height: 100.0%;"><b>Antakya</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/658381' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_14437cf2f4e55762f4d74082b0bec2f4.setContent(html_7b5b6279d9db4a8c7cf78a578e9ad9c1);
+            
+        
+
+        circle_marker_51d9b29ef5be699dbc999679769b765b.bindPopup(popup_14437cf2f4e55762f4d74082b0bec2f4)
+        ;
+
+        
+    
+    
+            circle_marker_51d9b29ef5be699dbc999679769b765b.bindTooltip(
+                `<div>
+                     Antakya
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bca183414bab9d740d4a5091b3cbcea8 = L.circleMarker(
+                [36.4725818, 37.0947397],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_db7319cabaa309c216eb673f8dd155ad = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_18462eaea856ac3d7437bcf201026e43 = $(`<div id="html_18462eaea856ac3d7437bcf201026e43" style="width: 100.0%; height: 100.0%;"><b>Arpadda</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/122919705' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_db7319cabaa309c216eb673f8dd155ad.setContent(html_18462eaea856ac3d7437bcf201026e43);
+            
+        
+
+        circle_marker_bca183414bab9d740d4a5091b3cbcea8.bindPopup(popup_db7319cabaa309c216eb673f8dd155ad)
+        ;
+
+        
+    
+    
+            circle_marker_bca183414bab9d740d4a5091b3cbcea8.bindTooltip(
+                `<div>
+                     Arpadda
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_20f52308ecbe3e3fb12e1463d4f1ce83 = L.circleMarker(
+                [36.8516655007633, 38.40063987181522],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_536f957e3670f12e914219f329b4d898 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a30acc5cc5ca4f283b26434fae764306 = $(`<div id="html_a30acc5cc5ca4f283b26434fae764306" style="width: 100.0%; height: 100.0%;"><b>Arslan Tash</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/658399' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_536f957e3670f12e914219f329b4d898.setContent(html_a30acc5cc5ca4f283b26434fae764306);
+            
+        
+
+        circle_marker_20f52308ecbe3e3fb12e1463d4f1ce83.bindPopup(popup_536f957e3670f12e914219f329b4d898)
+        ;
+
+        
+    
+    
+            circle_marker_20f52308ecbe3e3fb12e1463d4f1ce83.bindTooltip(
+                `<div>
+                     Arslan Tash
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_68ced574d4a052172f5cf4fc6baa6f77 = L.circleMarker(
+                [36.78753445, 38.0359452],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_746d50288ac402c5f7285f6b56811b10 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5510a436b9c304961479a2537045d737 = $(`<div id="html_5510a436b9c304961479a2537045d737" style="width: 100.0%; height: 100.0%;"><b>Burmarina</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/193113381' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_746d50288ac402c5f7285f6b56811b10.setContent(html_5510a436b9c304961479a2537045d737);
+            
+        
+
+        circle_marker_68ced574d4a052172f5cf4fc6baa6f77.bindPopup(popup_746d50288ac402c5f7285f6b56811b10)
+        ;
+
+        
+    
+    
+            circle_marker_68ced574d4a052172f5cf4fc6baa6f77.bindTooltip(
+                `<div>
+                     Burmarina
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4039bfb0b1515f79cd2520c5d4e7a8f4 = L.circleMarker(
+                [36.829422953272655, 38.014920519720285],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b0c32654ea8e2d0fe0258310e006c8cc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_82b225339865c6036ad4f67562ec5009 = $(`<div id="html_82b225339865c6036ad4f67562ec5009" style="width: 100.0%; height: 100.0%;"><b>Carchemish</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/658465' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b0c32654ea8e2d0fe0258310e006c8cc.setContent(html_82b225339865c6036ad4f67562ec5009);
+            
+        
+
+        circle_marker_4039bfb0b1515f79cd2520c5d4e7a8f4.bindPopup(popup_b0c32654ea8e2d0fe0258310e006c8cc)
+        ;
+
+        
+    
+    
+            circle_marker_4039bfb0b1515f79cd2520c5d4e7a8f4.bindTooltip(
+                `<div>
+                     Carchemish
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_819d607f027a5d962ebf3d3fd21ad531 = L.circleMarker(
+                [33.511612, 36.309102],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_0e2795ae5f5a07b71b3ef3b14048af82 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d957b087a6d6c9c1e4952c1b2f1d6d63 = $(`<div id="html_d957b087a6d6c9c1e4952c1b2f1d6d63" style="width: 100.0%; height: 100.0%;"><b>Damascus</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/678106' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_0e2795ae5f5a07b71b3ef3b14048af82.setContent(html_d957b087a6d6c9c1e4952c1b2f1d6d63);
+            
+        
+
+        circle_marker_819d607f027a5d962ebf3d3fd21ad531.bindPopup(popup_0e2795ae5f5a07b71b3ef3b14048af82)
+        ;
+
+        
+    
+    
+            circle_marker_819d607f027a5d962ebf3d3fd21ad531.bindTooltip(
+                `<div>
+                     Damascus
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7f447a0cd0a1acdc2a0f5f1fbf18248e = L.circleMarker(
+                [35.1329746, 36.7488012],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_6e71436c32528a4c7153544024a66c06 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2f8a2a436a51e6d71f223ded191b8e1c = $(`<div id="html_2f8a2a436a51e6d71f223ded191b8e1c" style="width: 100.0%; height: 100.0%;"><b>Hamath</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/668182' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_6e71436c32528a4c7153544024a66c06.setContent(html_2f8a2a436a51e6d71f223ded191b8e1c);
+            
+        
+
+        circle_marker_7f447a0cd0a1acdc2a0f5f1fbf18248e.bindPopup(popup_6e71436c32528a4c7153544024a66c06)
+        ;
+
+        
+    
+    
+            circle_marker_7f447a0cd0a1acdc2a0f5f1fbf18248e.bindTooltip(
+                `<div>
+                     Hamath
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c0ec3a2226285e089867d15ea670ae32 = L.circleMarker(
+                [35.0662424, 36.343313],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_7ea3caeae93a604bec9b4154efdc0374 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_32d9a608fb3298cc49ab09551b6991cd = $(`<div id="html_32d9a608fb3298cc49ab09551b6991cd" style="width: 100.0%; height: 100.0%;"><b>Manṣuate</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/708431251' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_7ea3caeae93a604bec9b4154efdc0374.setContent(html_32d9a608fb3298cc49ab09551b6991cd);
+            
+        
+
+        circle_marker_c0ec3a2226285e089867d15ea670ae32.bindPopup(popup_7ea3caeae93a604bec9b4154efdc0374)
+        ;
+
+        
+    
+    
+            circle_marker_c0ec3a2226285e089867d15ea670ae32.bindTooltip(
+                `<div>
+                     Manṣuate
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9ac7ff03824390d5eb43f7cf33be5048 = L.circleMarker(
+                [37.5841372, 36.9264045],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_a0f336858edd4e59417b72dccc634da1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1ca312a40bc247e864525e4d57eca3af = $(`<div id="html_1ca312a40bc247e864525e4d57eca3af" style="width: 100.0%; height: 100.0%;"><b>Marqasu</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/658474' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_a0f336858edd4e59417b72dccc634da1.setContent(html_1ca312a40bc247e864525e4d57eca3af);
+            
+        
+
+        circle_marker_9ac7ff03824390d5eb43f7cf33be5048.bindPopup(popup_a0f336858edd4e59417b72dccc634da1)
+        ;
+
+        
+    
+    
+            circle_marker_9ac7ff03824390d5eb43f7cf33be5048.bindTooltip(
+                `<div>
+                     Marqasu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d6383f2411e19873e95a3963edff3532 = L.circleMarker(
+                [36.24826822114462, 36.375942205920666],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_795ae8f775a696ac9cb7ebc83e20acc8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8f6d0676b68857e34885402c829988e7 = $(`<div id="html_8f6d0676b68857e34885402c829988e7" style="width: 100.0%; height: 100.0%;"><b>Tell Tayinat</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/913163220' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_795ae8f775a696ac9cb7ebc83e20acc8.setContent(html_8f6d0676b68857e34885402c829988e7);
+            
+        
+
+        circle_marker_d6383f2411e19873e95a3963edff3532.bindPopup(popup_795ae8f775a696ac9cb7ebc83e20acc8)
+        ;
+
+        
+    
+    
+            circle_marker_d6383f2411e19873e95a3963edff3532.bindTooltip(
+                `<div>
+                     Tell Tayinat
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_33f2fb20848fb65c1094c5c1f16feb74 = L.circleMarker(
+                [36.67423358512357, 38.12092120794608],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_66dbf99fa68e578e2d4c1f55a07ddbbd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1c7b51691b1485215cdf787ddaabd544 = $(`<div id="html_1c7b51691b1485215cdf787ddaabd544" style="width: 100.0%; height: 100.0%;"><b>Til Barsip</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/658410' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_66dbf99fa68e578e2d4c1f55a07ddbbd.setContent(html_1c7b51691b1485215cdf787ddaabd544);
+            
+        
+
+        circle_marker_33f2fb20848fb65c1094c5c1f16feb74.bindPopup(popup_66dbf99fa68e578e2d4c1f55a07ddbbd)
+        ;
+
+        
+    
+    
+            circle_marker_33f2fb20848fb65c1094c5c1f16feb74.bindTooltip(
+                `<div>
+                     Til Barsip
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8cafe557e7d27d780a42717211c758d9 = L.circleMarker(
+                [35.2833333, 36.4],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b86b40482870755a03b3c9d9cf702db1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d8cb63e57e7a2ab3d23bbf77cb91dbd0 = $(`<div id="html_d8cb63e57e7a2ab3d23bbf77cb91dbd0" style="width: 100.0%; height: 100.0%;"><b>Tunip</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/668200' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b86b40482870755a03b3c9d9cf702db1.setContent(html_d8cb63e57e7a2ab3d23bbf77cb91dbd0);
+            
+        
+
+        circle_marker_8cafe557e7d27d780a42717211c758d9.bindPopup(popup_b86b40482870755a03b3c9d9cf702db1)
+        ;
+
+        
+    
+    
+            circle_marker_8cafe557e7d27d780a42717211c758d9.bindTooltip(
+                `<div>
+                     Tunip
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0f6b85aae60d4fc5a5423d2d120e9cd3 = L.circleMarker(
+                [37.758916, 37.069119],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_8ed732be41be04c271f626e5e3c2b423 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e2318c05c61589e7955f501730845366 = $(`<div id="html_e2318c05c61589e7955f501730845366" style="width: 100.0%; height: 100.0%;"><b>Turlu Höyük</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/201144661' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_8ed732be41be04c271f626e5e3c2b423.setContent(html_e2318c05c61589e7955f501730845366);
+            
+        
+
+        circle_marker_0f6b85aae60d4fc5a5423d2d120e9cd3.bindPopup(popup_8ed732be41be04c271f626e5e3c2b423)
+        ;
+
+        
+    
+    
+            circle_marker_0f6b85aae60d4fc5a5423d2d120e9cd3.bindTooltip(
+                `<div>
+                     Turlu Höyük
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f66fed1979588d77a5bd46cfcbf42cb2 = L.circleMarker(
+                [37.1031937143523, 36.67833017601037],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_7c200dbe12cbf4021c042adc8a1113e9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2e320dbf8f57c1e09e37658b442e9bbb = $(`<div id="html_2e320dbf8f57c1e09e37658b442e9bbb" style="width: 100.0%; height: 100.0%;"><b>Zincirli</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/192555966' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_7c200dbe12cbf4021c042adc8a1113e9.setContent(html_2e320dbf8f57c1e09e37658b442e9bbb);
+            
+        
+
+        circle_marker_f66fed1979588d77a5bd46cfcbf42cb2.bindPopup(popup_7c200dbe12cbf4021c042adc8a1113e9)
+        ;
+
+        
+    
+    
+            circle_marker_f66fed1979588d77a5bd46cfcbf42cb2.bindTooltip(
+                `<div>
+                     Zincirli
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aa4f38b6aaee809fb7c29f73636d77cf = L.circleMarker(
+                [35.58718993333333, 36.356247333333336],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#008080", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_e59694eda0be2e57c6b9d5b3b9004d97 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_111cc258e8793d0714f953a8f49135ab = $(`<div id="html_111cc258e8793d0714f953a8f49135ab" style="width: 100.0%; height: 100.0%;"><b>el-Ghab</b><br>Region: Syria<br><a href='https://pleiades.stoa.org/places/413309735' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_e59694eda0be2e57c6b9d5b3b9004d97.setContent(html_111cc258e8793d0714f953a8f49135ab);
+            
+        
+
+        circle_marker_aa4f38b6aaee809fb7c29f73636d77cf.bindPopup(popup_e59694eda0be2e57c6b9d5b3b9004d97)
+        ;
+
+        
+    
+    
+            circle_marker_aa4f38b6aaee809fb7c29f73636d77cf.bindTooltip(
+                `<div>
+                     el-Ghab
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be0d04ba6d11b30b20a34564a155b93f = L.circleMarker(
+                [37.24613335, 37.84896665],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e6beff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_2a27bc4a16084d9a49d50eb818b39f27 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6e09fd41f029ea9bb38e5599f5c096eb = $(`<div id="html_6e09fd41f029ea9bb38e5599f5c096eb" style="width: 100.0%; height: 100.0%;"><b>Kenk Boǧazı</b><br>Region: Syria (Periphery)<br><a href='https://pleiades.stoa.org/places/842949950' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_2a27bc4a16084d9a49d50eb818b39f27.setContent(html_6e09fd41f029ea9bb38e5599f5c096eb);
+            
+        
+
+        circle_marker_be0d04ba6d11b30b20a34564a155b93f.bindPopup(popup_2a27bc4a16084d9a49d50eb818b39f27)
+        ;
+
+        
+    
+    
+            circle_marker_be0d04ba6d11b30b20a34564a155b93f.bindTooltip(
+                `<div>
+                     Kenk Boǧazı
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_13fb0227e20ff5397163127b1faf456f = L.circleMarker(
+                [37.39517721, 37.28509209],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e6beff", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_a20961f5d0b36c948b450e3a7e1850ef = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bc0c589168c089e70858bd3af988859a = $(`<div id="html_bc0c589168c089e70858bd3af988859a" style="width: 100.0%; height: 100.0%;"><b>Kizkapanlı</b><br>Region: Syria (Periphery)<br><a href='https://pleiades.stoa.org/places/193878353' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_a20961f5d0b36c948b450e3a7e1850ef.setContent(html_bc0c589168c089e70858bd3af988859a);
+            
+        
+
+        circle_marker_13fb0227e20ff5397163127b1faf456f.bindPopup(popup_a20961f5d0b36c948b450e3a7e1850ef)
+        ;
+
+        
+    
+    
+            circle_marker_13fb0227e20ff5397163127b1faf456f.bindTooltip(
+                `<div>
+                     Kizkapanlı
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fa6cded0368cc30b6758408b339594be = L.circleMarker(
+                [35.64487477378191, 40.74249489282332],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_503d30f0d970a18afa01a41b3440a50f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_406e6bf464ec1701a263b35afe060edc = $(`<div id="html_406e6bf464ec1701a263b35afe060edc" style="width: 100.0%; height: 100.0%;"><b>Dur-Katlimmu</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/893991' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_503d30f0d970a18afa01a41b3440a50f.setContent(html_406e6bf464ec1701a263b35afe060edc);
+            
+        
+
+        circle_marker_fa6cded0368cc30b6758408b339594be.bindPopup(popup_503d30f0d970a18afa01a41b3440a50f)
+        ;
+
+        
+    
+    
+            circle_marker_fa6cded0368cc30b6758408b339594be.bindTooltip(
+                `<div>
+                     Dur-Katlimmu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_635a18b6bb7bf5a162ba9e78d19b58ec = L.circleMarker(
+                [36.8267304, 40.03967656666666],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_f409d20bb2a2432e6466170304a3b869 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a436afc6a6c7a90b57b8be36899a41b9 = $(`<div id="html_a436afc6a6c7a90b57b8be36899a41b9" style="width: 100.0%; height: 100.0%;"><b>Guzana</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874739' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_f409d20bb2a2432e6466170304a3b869.setContent(html_a436afc6a6c7a90b57b8be36899a41b9);
+            
+        
+
+        circle_marker_635a18b6bb7bf5a162ba9e78d19b58ec.bindPopup(popup_f409d20bb2a2432e6466170304a3b869)
+        ;
+
+        
+    
+    
+            circle_marker_635a18b6bb7bf5a162ba9e78d19b58ec.bindTooltip(
+                `<div>
+                     Guzana
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cef800b5723a94b12709f5699f6d6dbd = L.circleMarker(
+                [36.86359430938534, 39.03074965053609],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_31d46a733ef03ff72e7b9456f4544710 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_46ea9126eca1e8172f2ad597b7d08632 = $(`<div id="html_46ea9126eca1e8172f2ad597b7d08632" style="width: 100.0%; height: 100.0%;"><b>Harran/Carrhae</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/658427' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_31d46a733ef03ff72e7b9456f4544710.setContent(html_46ea9126eca1e8172f2ad597b7d08632);
+            
+        
+
+        circle_marker_cef800b5723a94b12709f5699f6d6dbd.bindPopup(popup_31d46a733ef03ff72e7b9456f4544710)
+        ;
+
+        
+    
+    
+            circle_marker_cef800b5723a94b12709f5699f6d6dbd.bindTooltip(
+                `<div>
+                     Harran/Carrhae
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7c2e105bd455117ee1faf09f283f749a = L.circleMarker(
+                [37.050148404418806, 38.906303464789374],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_79955e51bb6b5863730ce8fb05d19cf7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_65dbe358b08d1c9bc1d30910de72e102 = $(`<div id="html_65dbe358b08d1c9bc1d30910de72e102" style="width: 100.0%; height: 100.0%;"><b>Huzirina</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/249509021' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_79955e51bb6b5863730ce8fb05d19cf7.setContent(html_65dbe358b08d1c9bc1d30910de72e102);
+            
+        
+
+        circle_marker_7c2e105bd455117ee1faf09f283f749a.bindPopup(popup_79955e51bb6b5863730ce8fb05d19cf7)
+        ;
+
+        
+    
+    
+            circle_marker_7c2e105bd455117ee1faf09f283f749a.bindTooltip(
+                `<div>
+                     Huzirina
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3ef8ee33d743cc848c75b0d4fa05cb1f = L.circleMarker(
+                [37.82605520514144, 40.5397477189682],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_012745f6e306a9fa1b364b73e01fe7b2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b4fccc9509d0ab7f0ac3e760bce7f14d = $(`<div id="html_b4fccc9509d0ab7f0ac3e760bce7f14d" style="width: 100.0%; height: 100.0%;"><b>Kurkh</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874418' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_012745f6e306a9fa1b364b73e01fe7b2.setContent(html_b4fccc9509d0ab7f0ac3e760bce7f14d);
+            
+        
+
+        circle_marker_3ef8ee33d743cc848c75b0d4fa05cb1f.bindPopup(popup_012745f6e306a9fa1b364b73e01fe7b2)
+        ;
+
+        
+    
+    
+            circle_marker_3ef8ee33d743cc848c75b0d4fa05cb1f.bindTooltip(
+                `<div>
+                     Kurkh
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_29f6b62e8fb5bb14430665e0ef9be5d4 = L.circleMarker(
+                [37.0675116667, 41.2154466667],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_aec4894fe2262dda4ce77593a4519111 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_366f5f69066eed232bed520f63135222 = $(`<div id="html_366f5f69066eed232bed520f63135222" style="width: 100.0%; height: 100.0%;"><b>Naṣibina</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874623' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_aec4894fe2262dda4ce77593a4519111.setContent(html_366f5f69066eed232bed520f63135222);
+            
+        
+
+        circle_marker_29f6b62e8fb5bb14430665e0ef9be5d4.bindPopup(popup_aec4894fe2262dda4ce77593a4519111)
+        ;
+
+        
+    
+    
+            circle_marker_29f6b62e8fb5bb14430665e0ef9be5d4.bindTooltip(
+                `<div>
+                     Naṣibina
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5ca2fc8428f8665da6d0a9e25c03f0a6 = L.circleMarker(
+                [36.3734185, 41.4880515],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_dbc4f0e13fd54c2f6474b164061cdf41 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6b068fa8644d6571ed6a40cdcaa4d334 = $(`<div id="html_6b068fa8644d6571ed6a40cdcaa4d334" style="width: 100.0%; height: 100.0%;"><b>Pāra</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/914118847' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_dbc4f0e13fd54c2f6474b164061cdf41.setContent(html_6b068fa8644d6571ed6a40cdcaa4d334);
+            
+        
+
+        circle_marker_5ca2fc8428f8665da6d0a9e25c03f0a6.bindPopup(popup_dbc4f0e13fd54c2f6474b164061cdf41)
+        ;
+
+        
+    
+    
+            circle_marker_5ca2fc8428f8665da6d0a9e25c03f0a6.bindTooltip(
+                `<div>
+                     Pāra
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_604fabd04ef0f981e3cac429446b4a59 = L.circleMarker(
+                [35.795538, 41.487122],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_a22f1448947005f70a05b0bd3652a116 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8d63ef382256a51bce553a51ac6bddbf = $(`<div id="html_8d63ef382256a51bce553a51ac6bddbf" style="width: 100.0%; height: 100.0%;"><b>Raṣappa</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/427568541' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_a22f1448947005f70a05b0bd3652a116.setContent(html_8d63ef382256a51bce553a51ac6bddbf);
+            
+        
+
+        circle_marker_604fabd04ef0f981e3cac429446b4a59.bindPopup(popup_a22f1448947005f70a05b0bd3652a116)
+        ;
+
+        
+    
+    
+            circle_marker_604fabd04ef0f981e3cac429446b4a59.bindTooltip(
+                `<div>
+                     Raṣappa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cf653d423e5b92c76652f196f50513be = L.circleMarker(
+                [36.0807029, 40.6565033],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_c76569c87684b80b3c7a5bdb8da9262f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9cbb8c33be9bad9cf384953ea6295e86 = $(`<div id="html_9cbb8c33be9bad9cf384953ea6295e86" style="width: 100.0%; height: 100.0%;"><b>Sabaʾa</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/528477900' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_c76569c87684b80b3c7a5bdb8da9262f.setContent(html_9cbb8c33be9bad9cf384953ea6295e86);
+            
+        
+
+        circle_marker_cf653d423e5b92c76652f196f50513be.bindPopup(popup_c76569c87684b80b3c7a5bdb8da9262f)
+        ;
+
+        
+    
+    
+            circle_marker_cf653d423e5b92c76652f196f50513be.bindTooltip(
+                `<div>
+                     Sabaʾa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d6c257cfbc1638b9927b65b0cd7ff86d = L.circleMarker(
+                [34.200116, 43.876735],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_8e60af4c46ee64e14e68a121c38d93d8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2d0291de44692adf2a7242c04980b499 = $(`<div id="html_2d0291de44692adf2a7242c04980b499" style="width: 100.0%; height: 100.0%;"><b>Samarra</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/894082' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_8e60af4c46ee64e14e68a121c38d93d8.setContent(html_2d0291de44692adf2a7242c04980b499);
+            
+        
+
+        circle_marker_d6c257cfbc1638b9927b65b0cd7ff86d.bindPopup(popup_8e60af4c46ee64e14e68a121c38d93d8)
+        ;
+
+        
+    
+    
+            circle_marker_d6c257cfbc1638b9927b65b0cd7ff86d.bindTooltip(
+                `<div>
+                     Samarra
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ed3c4756dbfefa3bbd0fa543271792fc = L.circleMarker(
+                [36.2145244, 42.1622211],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_0286bcf54b36eff59b53220af7cddc68 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_abd118d0ee5119111ed75f45aebb0fed = $(`<div id="html_abd118d0ee5119111ed75f45aebb0fed" style="width: 100.0%; height: 100.0%;"><b>Tell Abta</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/111343632' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_0286bcf54b36eff59b53220af7cddc68.setContent(html_abd118d0ee5119111ed75f45aebb0fed);
+            
+        
+
+        circle_marker_ed3c4756dbfefa3bbd0fa543271792fc.bindPopup(popup_0286bcf54b36eff59b53220af7cddc68)
+        ;
+
+        
+    
+    
+            circle_marker_ed3c4756dbfefa3bbd0fa543271792fc.bindTooltip(
+                `<div>
+                     Tell Abta
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ebd3e7df80a42d88f1879ba65be98ae7 = L.circleMarker(
+                [36.42973925, 42.5972703],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_70e4884818803a4062926d2c268bc914 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_206167076df35bc5b364b0812059cc93 = $(`<div id="html_206167076df35bc5b364b0812059cc93" style="width: 100.0%; height: 100.0%;"><b>Tell Abu Marya</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874723' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_70e4884818803a4062926d2c268bc914.setContent(html_206167076df35bc5b364b0812059cc93);
+            
+        
+
+        circle_marker_ebd3e7df80a42d88f1879ba65be98ae7.bindPopup(popup_70e4884818803a4062926d2c268bc914)
+        ;
+
+        
+    
+    
+            circle_marker_ebd3e7df80a42d88f1879ba65be98ae7.bindTooltip(
+                `<div>
+                     Tell Abu Marya
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_00b8e8d1721168158cebff67d52f1055 = L.circleMarker(
+                [36.208224318729805, 40.72045912746637],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_6a8b19205305e79c0778b12e64d364f5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dbb65c7b4b708c0e35f0b378e80e192e = $(`<div id="html_dbb65c7b4b708c0e35f0b378e80e192e" style="width: 100.0%; height: 100.0%;"><b>Tell Ajaja</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874688' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_6a8b19205305e79c0778b12e64d364f5.setContent(html_dbb65c7b4b708c0e35f0b378e80e192e);
+            
+        
+
+        circle_marker_00b8e8d1721168158cebff67d52f1055.bindPopup(popup_6a8b19205305e79c0778b12e64d364f5)
+        ;
+
+        
+    
+    
+            circle_marker_00b8e8d1721168158cebff67d52f1055.bindTooltip(
+                `<div>
+                     Tell Ajaja
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9b16940732d1639a28181ff0f5630cd5 = L.circleMarker(
+                [34.191, 45.0512],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_f87f0eb6d2f23d69b310e5267b3af5b7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_982d3c6d684770af602efd23ec22b39a = $(`<div id="html_982d3c6d684770af602efd23ec22b39a" style="width: 100.0%; height: 100.0%;"><b>Tell Baradan</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/894127' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_f87f0eb6d2f23d69b310e5267b3af5b7.setContent(html_982d3c6d684770af602efd23ec22b39a);
+            
+        
+
+        circle_marker_9b16940732d1639a28181ff0f5630cd5.bindPopup(popup_f87f0eb6d2f23d69b310e5267b3af5b7)
+        ;
+
+        
+    
+    
+            circle_marker_9b16940732d1639a28181ff0f5630cd5.bindTooltip(
+                `<div>
+                     Tell Baradan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f694bcdae8e80b79f4cf3dee395f7a4 = L.circleMarker(
+                [36.73880012076283, 41.12704239760552],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_2e3839e86b7883d8f4aed76a9378bb52 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ea5803e4e92627738832fea9dba21c6a = $(`<div id="html_ea5803e4e92627738832fea9dba21c6a" style="width: 100.0%; height: 100.0%;"><b>Tell Barri</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874732' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_2e3839e86b7883d8f4aed76a9378bb52.setContent(html_ea5803e4e92627738832fea9dba21c6a);
+            
+        
+
+        circle_marker_3f694bcdae8e80b79f4cf3dee395f7a4.bindPopup(popup_2e3839e86b7883d8f4aed76a9378bb52)
+        ;
+
+        
+    
+    
+            circle_marker_3f694bcdae8e80b79f4cf3dee395f7a4.bindTooltip(
+                `<div>
+                     Tell Barri
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_890bbdec8b6a4beaa17bbc09ef3b79d1 = L.circleMarker(
+                [36.8424461, 40.0708408],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_cdfc0a4ca707e02cd625eaeeaed02e53 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dcbc690140ee08bad0757ff0600d735e = $(`<div id="html_dcbc690140ee08bad0757ff0600d735e" style="width: 100.0%; height: 100.0%;"><b>Tell Fakhariyah</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/572048102' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_cdfc0a4ca707e02cd625eaeeaed02e53.setContent(html_dcbc690140ee08bad0757ff0600d735e);
+            
+        
+
+        circle_marker_890bbdec8b6a4beaa17bbc09ef3b79d1.bindPopup(popup_cdfc0a4ca707e02cd625eaeeaed02e53)
+        ;
+
+        
+    
+    
+            circle_marker_890bbdec8b6a4beaa17bbc09ef3b79d1.bindTooltip(
+                `<div>
+                     Tell Fakhariyah
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_02076e65e23acd12f974750cebe8bd9f = L.circleMarker(
+                [34.701245414906865, 43.33427845446918],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_032d90bbc73a15cbc8e2abb3d5a41f8c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_211e12ad67ad1f5d03c68572cb063fd6 = $(`<div id="html_211e12ad67ad1f5d03c68572cb063fd6" style="width: 100.0%; height: 100.0%;"><b>Tell Rimah</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/356369838' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_032d90bbc73a15cbc8e2abb3d5a41f8c.setContent(html_211e12ad67ad1f5d03c68572cb063fd6);
+            
+        
+
+        circle_marker_02076e65e23acd12f974750cebe8bd9f.bindPopup(popup_032d90bbc73a15cbc8e2abb3d5a41f8c)
+        ;
+
+        
+    
+    
+            circle_marker_02076e65e23acd12f974750cebe8bd9f.bindTooltip(
+                `<div>
+                     Tell Rimah
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d85fdf1f33f175938d517d7e72954a04 = L.circleMarker(
+                [36.748449, 42.30115215],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_db53a573982114cff545baa2afa98f27 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3100d5c883f334864c03f4b9bc6fe964 = $(`<div id="html_3100d5c883f334864c03f4b9bc6fe964" style="width: 100.0%; height: 100.0%;"><b>Tell al-Hawa</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/874728' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_db53a573982114cff545baa2afa98f27.setContent(html_3100d5c883f334864c03f4b9bc6fe964);
+            
+        
+
+        circle_marker_d85fdf1f33f175938d517d7e72954a04.bindPopup(popup_db53a573982114cff545baa2afa98f27)
+        ;
+
+        
+    
+    
+            circle_marker_d85fdf1f33f175938d517d7e72954a04.bindTooltip(
+                `<div>
+                     Tell al-Hawa
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_926cb62dab13fda326e38056c5483352 = L.circleMarker(
+                [38.529722, 40.5475],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_b3f0627d3f0a80b20d15b420829e71bc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e85d91f83341a3ca5fc2a6c1db68f39d = $(`<div id="html_e85d91f83341a3ca5fc2a6c1db68f39d" style="width: 100.0%; height: 100.0%;"><b>Tigris Tunnel</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/914118846' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_b3f0627d3f0a80b20d15b420829e71bc.setContent(html_e85d91f83341a3ca5fc2a6c1db68f39d);
+            
+        
+
+        circle_marker_926cb62dab13fda326e38056c5483352.bindPopup(popup_b3f0627d3f0a80b20d15b420829e71bc)
+        ;
+
+        
+    
+    
+            circle_marker_926cb62dab13fda326e38056c5483352.bindTooltip(
+                `<div>
+                     Tigris Tunnel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ef8f2c050d6e9dcd416d8310c6460f76 = L.circleMarker(
+                [34.60665349999999, 43.676953],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_834f78afdc6f95be8e1acaeb175eed11 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2767a74bea1bdf7089dc91a96d712efd = $(`<div id="html_2767a74bea1bdf7089dc91a96d712efd" style="width: 100.0%; height: 100.0%;"><b>Tikrit</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/894099' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_834f78afdc6f95be8e1acaeb175eed11.setContent(html_2767a74bea1bdf7089dc91a96d712efd);
+            
+        
+
+        circle_marker_ef8f2c050d6e9dcd416d8310c6460f76.bindPopup(popup_834f78afdc6f95be8e1acaeb175eed11)
+        ;
+
+        
+    
+    
+            circle_marker_ef8f2c050d6e9dcd416d8310c6460f76.bindTooltip(
+                `<div>
+                     Tikrit
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a3307b216feb95605b5d6457cd55e0f4 = L.circleMarker(
+                [37.79361975773317, 40.79298696458724],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6324", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_37b61fc23fba7b812334e8e47e2b76a9);
+        
+    
+        var popup_000356fa23f8895fc1bb481660af0418 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d46274cf399623aa892e31d65455dc51 = $(`<div id="html_d46274cf399623aa892e31d65455dc51" style="width: 100.0%; height: 100.0%;"><b>Tušhan</b><br>Region: Upper Mesopotamia<br><a href='https://pleiades.stoa.org/places/986129162' target='_blank'>View on Pleiades</a></div>`)[0];
+                popup_000356fa23f8895fc1bb481660af0418.setContent(html_d46274cf399623aa892e31d65455dc51);
+            
+        
+
+        circle_marker_a3307b216feb95605b5d6457cd55e0f4.bindPopup(popup_000356fa23f8895fc1bb481660af0418)
+        ;
+
+        
+    
+    
+            circle_marker_a3307b216feb95605b5d6457cd55e0f4.bindTooltip(
+                `<div>
+                     Tušhan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

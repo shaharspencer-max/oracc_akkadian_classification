@@ -1,0 +1,82 @@
+
+Action Plan for the Experiment
+Preparation: Create a Google Form with these 5 texts (and 5 "control" texts that are easy/obvious).
+
+Blind Test: Do not tell the experts the model's prediction or the ground truth.
+
+Prompt: Ask them:
+
+What is the likely City of Origin?
+
+Confidence Level (1-5)
+
+Crucial: What feature made you choose that? (Name, Dialect, Official, God, Social Network or Guess?)
+
+Analysis:
+
+If the Human gets Text 1 (Arbela) right (Nimrud) and the Model was wrong: The Human is better at handling "red herrings."
+
+If the Human gets Text 2 (Tušhan) "wrong" (says Nineveh): Your Ground Truth definition might be inconsistent (Origin vs. Archive), and the Model might actually be "right" in an archival sense.
+
+If the Human gets Text 5 (Nimrud) wrong: This proves that distinguishing between capitals without archaeological context is statistically impossible for both humans and machines.
+
+
+
+could have texts that were written in the capital but have a mix of different people and therefore we need to understand the social network.
+saao-saa06- P335142
+
+
+
+-- . The "Genre Bias" (Babylon vs. Uruk) Testing if experts can identify the minority source of a dominant genre.Text ID: X201682 (Astronomical Diary)The Conflict:True City: BabylonGemini Predicted: UrukWhy the Model Failed: The vast majority of surviving Astronomical Diaries come from Uruk (Achaemenid/Hellenistic periods). The model has learned a statistical bias: "If Diary $\to$ Likely Uruk."Why give this to an Expert: Can the expert spot the subtle differences between a Babylon diary and an Uruk diary? Or will the human expert also default to Uruk because that's where most diaries are from? This tests if the model's bias matches the human scholarly bias.
+
+--- Testing if experts can decouple personal names from location.
+
+Text ID: P521852 (Legal Document)
+
+The Conflict:
+
+True City: Uruk
+
+Gemini Predicted: Borsippa
+
+Why the Model Failed: The text is flooded with names containing "Nabu" (Nabu-ušezib, Nabu-zer-iddin, etc.). The model knows Nabu is the patron god of Borsippa and used a simple heuristic: "Lots of Nabu = Borsippa."
+
+Why give this to an Expert: Nabu was popular everywhere. A human expert should ideally ignore the popularity of the names and look at the family clans or the legal structure of the house sale.
+
+
+
+
+3. Yes, this text would be highly interesting and valuable for a human expert (an Assyriologist) to analyze, specifically one focusing on archival reconstruction and social network analysis.
+
+Here is why this specific fragment is a perfect candidate for human expert classification rather than just automated processing:
+
+1. The "Liphur-Il" Problem (Cross-Regional Mobility)
+An AI (as seen in my first attempt) sees the name Liphur-Il and statistically links him to Ma'allanate, where the bulk of his archive was found.
+
+A human expert, however, would find this text interesting because it documents mobility.
+
+The Anomaly: Finding Liphur-Il in a text written in Til Barsip (if that is indeed the provenance) suggests he traveled there to do business.
+
+The Expert Task: An expert would analyze whether this tablet belongs physically to the Turiki Archive (the creditor in Til Barsip) or if it was brought back to Ma'allanate by Liphur-Il after the debt was paid (cancelled tablets were often kept by the debtor). This distinction reconstructs the "business trip" of an ancient merchant.
+
+2. Micro-History and Onomastics (The Name "Dasi-adini")
+The name {m}da-si-a-di-ni is a "gold mine" for a specialist in Aramaic-Assyrian relations.
+
+Cultural Persistence: The Assyrians conquered Bit-Adini (Til Barsip) centuries prior to 683 BCE. A human expert would analyze the significance of a person still bearing a name with the theophoric/geographical element "-adini" this late in the Neo-Assyrian period. It shows the survival of local "Adini" identity under imperial rule.
+
+Dialect Detection: An expert can analyze the spelling variations in witnesses like Anqame and Salam-Adad to pinpoint specific local Aramaic dialects distinct from those in Nineveh or Nippur.
+
+3. Disambiguation of "Standard" Formulas
+Legal formulas in the Neo-Assyrian empire were highly standardized (the uamtum format), which makes them look identical to a machine.
+
+The Human Eye: A human expert looks for the deviations. For example, the use of the Mina of Carchemish (ina MA.NA ša [Gargamis]) is a crucial economic data point. It maps the economic "sphere of influence" of Carchemish vs. the Royal Standard of Nineveh.
+
+Classification: An expert would use this to draw a map of currency zones—something an AI might miss by just translating "Mina" as a generic unit.
+
+4. Broken Context (The Lacunae)
+The text has missing pieces ([...]).
+
+Restoration: In lines like [...] ⸢LUH⸣ KUR ⸢x x x⸣, an AI guesses based on probability. A human expert uses parallel texts from the specific Til Barsip corpus to restore the missing signs. They might know that Turiki's other contracts always list a specific profession or location in that slot, allowing for a reconstruction that is historically accurate rather than just statistically probable.
+
+Summary
+Giving this to a human expert is valuable because it tests the boundaries of the archive. It forces the expert to weigh prosopography (Liphur-Il) against geography (Til Barsip/Turiki) to determine where the tablet actually "lived" in antiquity.

@@ -1,0 +1,331 @@
+i realized that in oracc there is a sender_loc field which is our target, so i needed to clean the cities and take out locations where the sender loc is unknown.
+
+
+saved results of evaluation::
+
+
+C:\Users\shaha\PycharmProjects\oracc_akkadian_classification\.venv\Scripts\python.exe "C:\Users\shaha\PycharmProjects\oracc_akkadian_classification\scripts and results - 27_11_2025 - zero shot llm classification witrh gemini-2.5-flash\phase 4 - fixing sender location and recreating train+test\evaluate_gemini_results.py"
+RESULTS FOR GEMINI-2.5-FLASH FOR: 1 MILLENIUM
+STEP 1: EXPLAINING EXPERIMENT SETUP
+## MODEL USED: gemini-2.5-flash
+
+## SYSTEM PROMPT:
+
+        You are an expert in Akkadian regional dialects and scribal practices, with special focus on city-to-city variation in vocabulary, orthography, formulae, and scribal conventions.
+        Your task is to identify which ancient location this text was likely written in, from the list CANDIDATE_LOCATIONS below.
+
+        Constraint: Your answer must be one of the locations in CANDIDATE_LOCATIONS.
+
+        Input Format:
+        TEXT - the Akkadian text to analyze. The text was written in the first millennium BCE. Some types of proper names are masked (GN - geographical name,SN- state name,TN - Temple Name, WN - Water Name, QN - Quarter Name, ON  - Geographical Name (variant) DN - Divine Name,RN - Royal Name, EN - ethnic name. )
+
+        Instructions:
+        1. Initial Scan: Carefully read the text. Understand what is written.
+        2. Analyze indicative features: Deeply and carefully understand and analyze the text, the content, the subject matters, the grammar, onomastics, etc.
+        3. note any features that plausibly indicate a geographic origin (e.g. content,  morphology, lexicon, spelling conventions, dialectal forms, names, grammatical peculiarities, formulaic expressions, orthographic practices, references to local institutions or deities, etc.).
+        4. Evaluate Candidates: Compare the observed features against the specific locations in the CANDIDATE_LOCATIONS list.
+        5. Output Reasoning: Before providing the final answer, you must write a short explanation of your choice.
+        6. Final Output: Provide your choice of location in XML format like this: <CITY_NAME_CLASSIFICATION>city_name</CITY_NAME_CLASSIFICATION.
+
+        ====CANDIDATE_LOCATIONS===
+
+Babylon, Uruk, Ur, Persepolis, Daskyleion, Naqsh-I Rustam, Assur, Burmarina, Nimrud, Dur-Katlimmu, Guzana, Huzirina, Balāwāt, Marqasu, Zincirli, Tell Billa, Til Barsip, Tušhan, Sippar, Kutha, Borsippa, Nippur, Nineveh, Kish, Dilbat, Larsa, Dur-Sharrukin, Kilizu, Tell Barri, Tarbisu, Tell Satu Qala, Kurkh, Tell Abu Marya, Tell Ajaja, Tell Fakhariyah, Tell al-Hawa, Tigris Tunnel, Tell Rimah, Kizkapanlı, Byblos, Pāra, Tell Abta, Sabaʾa, Antakya, Dohuk, Kenk Boǧazı, Luristan, Dur-Kurigalzu, Me-Turran, Zalu-Ab, Selaʾ, Harran/Carrhae, Susa, Brissa, Tayma, Padakku, Marad, Nahr el-Kelb, Kissik, Isin, Arslan Tash, Tell Tayinat, Mila Mergi, Tell Baradan, Qalʾeh-i Imam, Tang-i Var, Ashdod, Melid, Turlu Höyük, Carchemish, Tunip, Samaria, Larnaka, Najafabad, Jerwan, Samarra, Tikrit, Judi Dagh, Wadi Bastura Tunnel, Bavian, Negub Tunnel, el-Ghab, Kalmākarra, Ben Shemen, Der, Arbela, Naṣibina, Hamath, Damascus, Raṣappa, Habruri, Hindanu, Barhalza, Bit-Zamani, Allabria, Qunbuna, Arzuhina, Muṣaṣir, Mannea, Kar-Sharrukin, Eshnunna, Parsua, Kisheshim, Lahiru, Arrapha, Larak, Akkad, Simyra, Manṣuate, Arpadda, Elam, Urartu, Sur Jureh, Ana, Dawali, Judeideh, Zawiyeh
+
+
+
+DATA MILLENIUM: first millenium
+TEST DATA POINTS EVALUATED: 2769
+
+
+MASKED ENTITIES:
+"GN",  # Geographical Name
+"SN",  # State/City Name
+"TN",  # Temple Name
+"WN",  # Water Name
+"QN",  # Quarter Name
+"ON",  # Geographical Name (variant)
+"DN",  # Divine Name (Patron gods give away the city)
+"RN",  # Royal Name
+"EN  # Ethnicity name
+FINISHED STEP 1
+
+
+
+
+STEP 2: EVALUATING BY METRICS (GLOBAL)
+Normalizing genre values...
+Original unique genres: 33
+Normalized unique genres: 33
+
+Top 10 normalized genres:
+genre
+Legal Document           700
+Royal Inscription        529
+Administrative Letter    363
+Administrative Record    253
+Astrological Report      174
+Scholarly Letter         126
+Astronomical Diary       120
+Extispicy Query           74
+Priestly Letter           73
+Literary Work             54
+Name: count, dtype: int64
+-----exact location accuracy------
+Accuracy: 0.4052
+
+
+--- getting accuracy@k (GLOBAL)----
+GETTING ACCURACY AT 20 KM
+Accuracy within 20 km: 0.4258
+GETTING ACCURACY AT 30 KM
+Accuracy within 30 km: 0.4301
+GETTING ACCURACY AT 40 KM
+Accuracy within 40 km: 0.4904
+GETTING ACCURACY AT 50 KM
+Accuracy within 50 km: 0.4926
+GETTING ACCURACY AT 60 KM
+Accuracy within 60 km: 0.4940
+GETTING ACCURACY AT 70 KM
+Accuracy within 70 km: 0.5081
+GETTING ACCURACY AT 80 KM
+Accuracy within 80 km: 0.5341
+GETTING ACCURACY AT 90 KM
+Accuracy within 90 km: 0.5421
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.5457
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 183.21 km
+Median Error Distance: 60.24 km
+FINISHED STEP 2
+
+
+
+STEP 3: VISUALIZING RESULTS
+Saved plot: heatmap_confusion_matrix_1_millenium-for_masked_data.png
+
+
+================================================
+--- GENERATING GENRE-SPECIFIC METRICS & PLOTS ---
+================================================
+Found 12 genres to process: ['Legal Document', 'Royal Inscription', 'Administrative Letter', 'Administrative Record', 'Astrological Report', 'Scholarly Letter', 'Astronomical Diary', 'Extispicy Query', 'Priestly Letter', 'Literary Work', 'Administrative Document', 'Omen']
+
+
+--------------------
+PROCESSING GENRE: LEGAL DOCUMENT
+--------------------
+Samples in genre: 700
+-----exact location accuracy------
+Accuracy: 0.4271
+
+... Accuracy@K for Legal Document ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.6329
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 118.44 km
+Median Error Distance: 32.83 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Legal_Document.png
+Saved plot for Legal Document
+
+--------------------
+PROCESSING GENRE: ROYAL INSCRIPTION
+--------------------
+Samples in genre: 529
+-----exact location accuracy------
+Accuracy: 0.3856
+
+... Accuracy@K for Royal Inscription ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.5860
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 173.91 km
+Median Error Distance: 32.83 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Royal_Inscription.png
+Saved plot for Royal Inscription
+
+--------------------
+PROCESSING GENRE: ADMINISTRATIVE LETTER
+--------------------
+Samples in genre: 363
+-----exact location accuracy------
+Accuracy: 0.2507
+
+... Accuracy@K for Administrative Letter ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.3719
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 255.86 km
+Median Error Distance: 231.56 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Administrative_Letter.png
+Saved plot for Administrative Letter
+
+--------------------
+PROCESSING GENRE: ADMINISTRATIVE RECORD
+--------------------
+Samples in genre: 253
+-----exact location accuracy------
+Accuracy: 0.2648
+
+... Accuracy@K for Administrative Record ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.4348
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 246.54 km
+Median Error Distance: 145.75 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Administrative_Record.png
+Saved plot for Administrative Record
+
+--------------------
+PROCESSING GENRE: ASTROLOGICAL REPORT
+--------------------
+Samples in genre: 174
+-----exact location accuracy------
+Accuracy: 0.3218
+
+... Accuracy@K for Astrological Report ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.3218
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 305.94 km
+Median Error Distance: 440.68 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Astrological_Report.png
+Saved plot for Astrological Report
+
+--------------------
+PROCESSING GENRE: SCHOLARLY LETTER
+--------------------
+Samples in genre: 126
+-----exact location accuracy------
+Accuracy: 0.6905
+
+... Accuracy@K for Scholarly Letter ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.7302
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 119.60 km
+Median Error Distance: 0.00 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Scholarly_Letter.png
+Saved plot for Scholarly Letter
+
+--------------------
+PROCESSING GENRE: ASTRONOMICAL DIARY
+--------------------
+Samples in genre: 120
+-----exact location accuracy------
+Accuracy: 0.9083
+
+... Accuracy@K for Astronomical Diary ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.9083
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 21.88 km
+Median Error Distance: 0.00 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Astronomical_Diary.png
+Saved plot for Astronomical Diary
+
+--------------------
+PROCESSING GENRE: EXTISPICY QUERY
+--------------------
+Samples in genre: 74
+-----exact location accuracy------
+Accuracy: 0.7027
+
+... Accuracy@K for Extispicy Query ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.7297
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 121.40 km
+Median Error Distance: 0.00 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Extispicy_Query.png
+Saved plot for Extispicy Query
+
+--------------------
+PROCESSING GENRE: PRIESTLY LETTER
+--------------------
+Samples in genre: 73
+-----exact location accuracy------
+Accuracy: 0.6027
+
+... Accuracy@K for Priestly Letter ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.6575
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 153.59 km
+Median Error Distance: 0.00 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Priestly_Letter.png
+Saved plot for Priestly Letter
+
+--------------------
+PROCESSING GENRE: LITERARY WORK
+--------------------
+Samples in genre: 54
+-----exact location accuracy------
+Accuracy: 0.1852
+
+... Accuracy@K for Literary Work ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.2593
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 354.44 km
+Median Error Distance: 434.75 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Literary_Work.png
+Saved plot for Literary Work
+
+--------------------
+PROCESSING GENRE: ADMINISTRATIVE DOCUMENT
+--------------------
+Samples in genre: 38
+-----exact location accuracy------
+Accuracy: 0.2632
+
+... Accuracy@K for Administrative Document ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.7632
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 118.89 km
+Median Error Distance: 60.24 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Administrative_Document.png
+Saved plot for Administrative Document
+
+--------------------
+PROCESSING GENRE: OMEN
+--------------------
+Samples in genre: 34
+-----exact location accuracy------
+Accuracy: 0.2059
+
+... Accuracy@K for Omen ...
+GETTING ACCURACY AT 100 KM
+Accuracy within 100 km: 0.2647
+
+
+EVALUATING MEAN AND MEDIAN ERROR DISTANCE
+Mean Error Distance: 297.02 km
+Median Error Distance: 292.86 km
+Saved plot: first_century_dataset_heatmap_confusion_matrix_Omen.png
+Saved plot for Omen
+
+Process finished with exit code 0

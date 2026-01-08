@@ -1,0 +1,26 @@
+at this point i understood that the task was too hard withought any proper nounhs.
+also from talking to shai i realized that i might need to give names so was can use onomastics.
+
+so i masked these proper nouns:
+      "GN",  # Geographical Name
+            "SN",  # State/City Name
+            "TN",  # Temple Name
+            "WN",  # Water Name
+            "QN",  # Quarter Name
+            "ON",  # Geographical Name (variant)
+            "DN",  # Divine Name (Patron gods give away the city)
+            "RN",  # Royal Name (Kings give away the city/era)ת
+            "EN"
+
+
+
+      i only had time to run on first millenium
+
+
+      i also find out that some of the projects had a sender loc which was actually the target. so i had to work on normalizing that
+
+      i also got the genres because that would be interesting to explore
+
+
+      also somewhat earlier i realized that some of projects werent so annotated, they didnt have normalized text, or parts of speech tagged.
+      so we would not be able to mask. so for now i stopped processing them.

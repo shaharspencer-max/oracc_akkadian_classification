@@ -1,0 +1,24 @@
+in this phase i masked all the peoiper nouns in the text but still added the timeframe to the gemini request
+and also added a list of candidates
+
+
+these are the proper nouns i masked
+
+#     "PN",
+        #     "RN",
+        #     "GN",
+        #     "SN",
+        #     "DN",
+        #     "TN",
+        #     "WN",
+        #     ,
+        #     "LN",
+        #     "QN",
+        #     "ON",
+        #     "RN"
+
+
+
+
+
+i
