@@ -53,6 +53,7 @@ REGION_MAP = {
     'Der': 'Eastern Mesopotamia', 'Me-Turran': 'Eastern Mesopotamia',
     'Tell Baradan': 'Eastern Mesopotamia',
     'Lahiru': 'Eastern Mesopotamia', # Moved from Assyria
+    'Tell Satu Qala': 'Eastern Mesopotamia',
     
     # Assyria (Core)
     'Assur': 'Assyria', 'Nineveh': 'Assyria', 'Nimrud': 'Assyria', 
@@ -81,7 +82,6 @@ REGION_MAP = {
     # Middle Euphrates
     'Hindanu': 'Middle Euphrates', 'Ana': 'Middle Euphrates', 'Sur Jureh': 'Middle Euphrates',
     'Judeideh': 'Middle Euphrates', 'Dawali': 'Middle Euphrates', 'Zawiyeh': 'Middle Euphrates',
-    'Tell Satu Qala': 'Middle Euphrates',
     
     # Syria
     'Til Barsip': 'Syria', 'Carchemish': 'Syria', 'Arslan Tash': 'Syria',
